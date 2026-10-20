@@ -242,6 +242,7 @@ model SPMBPeriod {
   terms      String?
   active     Boolean         @default(true)
   applicants SPMBApplicant[]
+  @@index([active, openAt, closeAt])
 }
 
 model SPMBApplicant {
@@ -263,6 +264,8 @@ model SPMBApplicant {
   verifiedAt DateTime?
   createdAt  DateTime        @default(now())
   @@index([periodId, status])
+  @@unique([periodId, nik])
+  @@unique([periodId, email])
 }
 
 model SystemLog {

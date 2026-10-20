@@ -1,7 +1,7 @@
 ---
 id: T-011
 title: SPMB Online
-status: TODO
+status: DOING
 priority: P1
 phase: 4
 domain: admin/sistem
@@ -45,4 +45,4 @@ Pendaftaran murid baru online mandiri + verifikasi berkas oleh operator + statis
 2. Verifikasi 1, tolak 1 + catatan → cek status publik + statistik + CSV.
 
 ## Log Agen
-- (isi saat dikerjakan)
+- [2026-10-20] Codex - DOING: mulai setelah T-010 selesai; sedang menelusuri blueprint, acceptance criteria, schema, dan alur autentikasi sebelum implementasi.

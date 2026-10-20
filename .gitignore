@@ -5,6 +5,7 @@ out/
 dist/
 *.db*
 public/uploads/*
+storage/spmb/*
 !.gitkeep
 .env
 .env.local

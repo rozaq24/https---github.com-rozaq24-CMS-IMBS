@@ -115,12 +115,18 @@ export const menuSchema = z.object({
   pageSlug: z.string().nullable().optional(),
 });
 
-export const spmbSchema = z.object({
-  periodId: z.string(),
-  name: z.string().min(3),
-  nik: z.string().min(10).optional(),
-  email: z.string().email().optional(),
-  phone: z.string().min(9),
-  origin: z.string().min(3),
-  parentName: z.string().min(3),
+const spmbPeriodFields = z.object({
+  name: z.string().trim().min(3).max(120), year: z.string().trim().min(4).max(9),
+  quota: z.coerce.number().int().positive().max(10000), openAt: z.coerce.date(), closeAt: z.coerce.date(),
+  terms: z.string().max(10000).optional(), active: z.boolean().default(true),
 });
+export const spmbPeriodSchema = spmbPeriodFields.refine((v) => v.closeAt >= v.openAt, { message: "Tanggal penutupan harus setelah pembukaan", path: ["closeAt"] });
+export const spmbPeriodUpdateSchema = spmbPeriodFields.partial().refine((v) => !v.openAt || !v.closeAt || v.closeAt >= v.openAt, { message: "Tanggal penutupan harus setelah pembukaan", path: ["closeAt"] });
+export const spmbSchema = z.object({
+  periodId: z.string().min(1), name: z.string().trim().min(3).max(120),
+  nik: z.string().trim().regex(/^\d{16}$/, "NIK harus 16 digit"),
+  email: z.union([z.string().trim().email().max(254), z.literal("")]),
+  phone: z.string().trim().min(9).max(30), origin: z.string().trim().min(3).max(160),
+  parentName: z.string().trim().min(3).max(120),
+});
+export const spmbDecisionSchema = z.object({ status: z.enum(["VERIFIED", "REJECTED", "ACCEPTED"]), note: z.string().trim().max(2000).optional() });
