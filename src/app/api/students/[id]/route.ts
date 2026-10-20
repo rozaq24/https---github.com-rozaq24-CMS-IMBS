@@ -11,7 +11,10 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   const body = await req.json().catch(() => null);
   const parsed = studentSchema.partial().safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Data siswa tidak valid", issues: parsed.error.flatten() }, { status: 400 });
-  if ((parsed.data.status ?? "AKTIF") === "AKTIF" && parsed.data.classId === null) return NextResponse.json({ error: "Siswa aktif harus berada di kelas" }, { status: 400 });
+  const current = await db.student.findUnique({ where: { id: params.id }, select: { id: true, classId: true, status: true } });
+  if (!current) return NextResponse.json({ error: "Siswa tidak ditemukan" }, { status: 404 });
+  const nextClassId = parsed.data.classId === undefined ? current.classId : parsed.data.classId;
+  if ((parsed.data.status ?? current.status) === "AKTIF" && !nextClassId) return NextResponse.json({ error: "Siswa aktif harus berada di kelas" }, { status: 400 });
   try {
     const student = await db.student.update({ where: { id: params.id }, data: parsed.data });
     await writeLog({ userId: session!.user.id, ip: getClientIp(req), action: "STUDENT_UPDATE", detail: student.nis });

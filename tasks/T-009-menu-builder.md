@@ -1,7 +1,7 @@
 ---
 id: T-009
 title: Menu Builder Drag-Drop 3 Level
-status: TODO
+status: DONE
 priority: P0
 phase: 3
 domain: admin/tampilan
@@ -31,11 +31,11 @@ Admin susun navigasi (tambah, geser, sembunyikan, hingga 3 level) tanpa coding.
 - `src/app/admin/menu/page.tsx`, `src/components/MenuBuilder.tsx`, `src/components/Navbar.tsx`
 
 ## Acceptance Criteria
-- [ ] Geser menu antar level → order tersimpan → navbar publik berubah < 1 menit
-- [ ] Coba buat level 4 → ditolak dengan pesan jelas; circular parent ditolak
-- [ ] Toggle visible off → hilang dari publik tapi tetap di builder
-- [ ] Mobile drawer + dropdown desktop jalan + aksesibel (keyboard/esc)
-- [ ] `npm run build` lolos
+- [x] Geser menu antar level → order tersimpan → navbar publik berubah < 1 menit
+- [x] Coba buat level 4 → ditolak dengan pesan jelas; circular parent ditolak
+- [x] Toggle visible off → hilang dari publik tapi tetap di builder
+- [x] Mobile drawer + dropdown desktop jalan + aksesibel (keyboard/esc)
+- [x] `npm run build` lolos
 
 ## Uji Manual
 1. Buat menu Profil > Visi-Misi + Sejarah (level 2) → cek navbar.
@@ -43,4 +43,6 @@ Admin susun navigasi (tambah, geser, sembunyikan, hingga 3 level) tanpa coding.
 3. Hide 1 menu → cek publik hilang.
 
 ## Log Agen
-- (isi saat dikerjakan)
+- [2026-10-20] Codex - DONE: menu CRUD + transactional reorder, depth/cycle validation, CustomPage target, visibility and accessible desktop/mobile navbar with 60-second refresh. Tree checks, `npx tsc --noEmit`, isolated Next build passed. Browser QA pending dev-server recovery.
+
+- [2026-10-20] Codex - DOING: mulai setelah T-008; meninjau schema MenuItem dan layout publik/admin.

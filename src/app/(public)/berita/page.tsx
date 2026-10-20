@@ -30,8 +30,8 @@ export default async function BeritaPage({ searchParams }: { searchParams: { typ
         <button className="btn-outline !py-[8px]">Cari</button>
       </form>
       <div className="grid md:grid-cols-3 gap-[21px]">
-        {posts.map((p) => (
-          <Link key={p.id} href={`/berita/${p.slug}`} className="card hover:shadow-xl transition">
+        {posts.map((p, index) => (
+          <Link key={p.id} href={`/berita/${p.slug}`} style={{ animationDelay: `${Math.min(index, 8) * 50}ms` }} className="card animate-list hover:shadow-xl transition">
             {p.cover && <img src={p.cover} alt={p.title} className="rounded-[13px] w-full h-[160px] object-cover mb-[13px]" />}
             <span className="text-[13px] font-bold text-slate-500">{p.type} • {p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("id-ID") : ""}</span>
             <h2 className="h-gold-3 mt-[8px]">{p.title}</h2>

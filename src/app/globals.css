@@ -7,20 +7,20 @@
   --brand-50: 236 253 245;
   --brand-100: 209 250 229;
   --brand-500: 16 185 129;
-  --brand-600: 5 150 105;
-  --brand-700: 4 120 87;
-  --accent-500: 139 92 246;
+  --brand-600: 4 120 87;
+  --brand-700: 6 95 70;
+  --accent-500: 109 40 217;
 }
 
-html[data-theme="blue"] { --brand-500: 59 130 246; --brand-600: 37 99 235; --brand-700: 29 78 216; --accent-500: 34 211 238; }
-html[data-theme="indigo"] { --brand-500: 99 102 241; --brand-600: 79 70 229; --accent-500: 168 85 247; }
-html[data-theme="violet"] { --brand-500: 139 92 246; --brand-600: 124 58 237; --accent-500: 16 185 129; }
-html[data-theme="rose"] { --brand-500: 244 63 94; --brand-600: 225 29 72; --accent-500: 251 146 60; }
-html[data-theme="orange"] { --brand-500: 249 115 22; --brand-600: 234 88 12; --accent-500: 16 185 129; }
-html[data-theme="teal"] { --brand-500: 20 184 166; --brand-600: 13 148 136; --accent-500: 99 102 241; }
-html[data-theme="cyan"] { --brand-500: 6 182 212; --brand-600: 8 145 178; --accent-500: 99 102 241; }
-html[data-theme="lime"] { --brand-500: 132 204 22; --brand-600: 101 163 13; --accent-500: 20 184 166; }
-html[data-theme="slate"] { --brand-500: 100 116 139; --brand-600: 71 85 105; --accent-500: 16 185 129; }
+html[data-theme="blue"] { --brand-500: 59 130 246; --brand-600: 29 78 216; --brand-700: 30 64 175; --accent-500: 14 116 144; }
+html[data-theme="indigo"] { --brand-500: 99 102 241; --brand-600: 67 56 202; --brand-700: 55 48 163; --accent-500: 126 34 206; }
+html[data-theme="violet"] { --brand-500: 139 92 246; --brand-600: 124 58 237; --brand-700: 109 40 217; --accent-500: 4 120 87; }
+html[data-theme="rose"] { --brand-500: 244 63 94; --brand-600: 190 18 60; --brand-700: 159 18 57; --accent-500: 194 65 12; }
+html[data-theme="orange"] { --brand-500: 249 115 22; --brand-600: 194 65 12; --brand-700: 154 52 18; --accent-500: 4 120 87; }
+html[data-theme="teal"] { --brand-500: 20 184 166; --brand-600: 15 118 110; --brand-700: 17 94 89; --accent-500: 67 56 202; }
+html[data-theme="cyan"] { --brand-500: 6 182 212; --brand-600: 14 116 144; --brand-700: 21 94 117; --accent-500: 67 56 202; }
+html[data-theme="lime"] { --brand-500: 132 204 22; --brand-600: 77 124 15; --brand-700: 63 98 18; --accent-500: 15 118 110; }
+html[data-theme="slate"] { --brand-500: 100 116 139; --brand-600: 71 85 105; --brand-700: 51 65 85; --accent-500: 4 120 87; }
 
 body { @apply bg-slate-50 text-slate-800 antialiased; font-size: 16px; }
 .dark body, .dark { @apply bg-slate-950 text-slate-100; }
@@ -40,4 +40,17 @@ body { @apply bg-slate-50 text-slate-800 antialiased; font-size: 16px; }
   .h-gold-2 { font-size: 31px; line-height: 1.25; font-weight: 700; }
   .h-gold-3 { font-size: 25px; font-weight: 700; }
   .grad-text { background: linear-gradient(135deg, rgb(var(--brand-600)), rgb(var(--accent-500))); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .animate-list { animation: list-in .35s ease-out both; }
+  .spotlight-card { background-image: radial-gradient(ellipse at 50% 0%, rgb(var(--brand-500) / .08), transparent 70%); transition: transform .2s ease, box-shadow .2s ease; }
+  .spotlight-card:hover { transform: translateY(-3px); box-shadow: 0 13px 34px -16px rgb(var(--brand-700) / .45); }
 }
+
+@keyframes list-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.dark .text-slate-400, .dark .text-slate-500, .dark .text-slate-600, .dark .text-slate-700 { color: #cbd5e1 !important; }
+.dark .btn-outline { color: #e2e8f0; border-color: rgb(var(--brand-500)); }
+.dark input, .dark textarea, .dark select { color: #f1f5f9; background-color: #1e293b; border-color: #475569; }
+.dark .tbl tbody tr:nth-child(even) { background-color: #1e293b; }
+.dark .tbl tbody tr:hover { background-color: #334155; }
+.dark details > div { background-color: #1e293b; border-color: #475569; }
+:focus-visible { outline: 3px solid rgb(var(--brand-500)); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }

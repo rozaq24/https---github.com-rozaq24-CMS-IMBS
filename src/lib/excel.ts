@@ -22,7 +22,7 @@ export function parseStudentWorkbook(buffer: Buffer, classes: ImportClass[], exi
   if (rows.length > 5000) throw new Error("Maksimal 5.000 baris per impor");
   const byName = new Map(classes.map((c) => [c.name.toLocaleLowerCase(), c]));
   const seen = new Set<string>();
-  return rows.flatMap((raw, index) => {
+  return rows.flatMap<ImportPreview>((raw, index) => {
     const normalized = Object.fromEntries(Object.entries(raw).map(([key, value]) => [key.trim().toLocaleLowerCase(), String(value ?? "").trim()]));
     if (Object.values(normalized).every((value) => !value)) return [];
     const candidate = {

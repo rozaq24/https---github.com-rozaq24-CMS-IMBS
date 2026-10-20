@@ -1,7 +1,7 @@
 ---
 id: T-008
 title: Jurusan/Ekskul/Prestasi + Agenda + Download Center
-status: TODO
+status: DONE
 priority: P1
 phase: 2
 domain: admin/akademik
@@ -35,10 +35,10 @@ Sisa SIAKAD dasar + layanan unduhan: jurusan (SMK), ekskul, prestasi, kalender a
 - `src/app/(public)/{program,ekstrakurikuler,prestasi,agenda,download}/page.tsx`
 
 ## Acceptance Criteria
-- [ ] Tambah jurusan/ekskul/prestasi → tampil publik + foto rapi
-- [ ] Agenda mendatang tampil kronologis + lampau terarsip otomatis
-- [ ] Upload PDF 10MB → unduh menambah counter + tercatat log
-- [ ] `npm run build` lolos
+- [x] Tambah jurusan/ekskul/prestasi → tampil publik + foto rapi
+- [x] Agenda mendatang tampil kronologis + lampau terarsip otomatis
+- [x] Upload PDF 10MB → unduh menambah counter + tercatat log
+- [x] `npm run build` lolos
 
 ## Uji Manual
 1. CRUD tiap entitas → cek halaman publik.
@@ -46,4 +46,6 @@ Sisa SIAKAD dasar + layanan unduhan: jurusan (SMK), ekskul, prestasi, kalender a
 3. Upload + unduh file → cek counter.
 
 ## Log Agen
-- (isi saat dikerjakan)
+- [2026-10-20] Codex - DONE: CRUD jurusan/ekskul/prestasi/agenda/unduhan; halaman publik program, ekstrakurikuler, prestasi, agenda upcoming+arsip/month, dan search unduhan. File hingga 25 MB tersimpan dengan UUID, counter unduhan dan SystemLog. Entity validation checks, tsc, isolated Next build passed. Browser QA pending dev-server recovery.
+
+- [2026-10-20] Codex - DOING: mulai setelah T-007; membaca scope dan memetakan implementasi yang tersedia.

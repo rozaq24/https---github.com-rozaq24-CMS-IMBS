@@ -4,15 +4,21 @@ import { useEffect, useState } from "react";
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
   useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
+    const saved = localStorage.getItem("imbs-dark-mode");
+    const enabled = saved === "dark" || (saved === null && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.classList.toggle("dark", enabled);
+    setDark(enabled);
   }, []);
   return (
     <button
       className="btn-outline !py-[8px] !px-[13px] text-[14px]"
+      aria-pressed={dark}
       onClick={() => {
         const el = document.documentElement;
         el.classList.toggle("dark");
-        setDark(el.classList.contains("dark"));
+        const enabled = el.classList.contains("dark");
+        localStorage.setItem("imbs-dark-mode", enabled ? "dark" : "light");
+        setDark(enabled);
       }}
       aria-label="Toggle dark mode"
     >

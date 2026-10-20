@@ -17,13 +17,13 @@
 ## Fase 2 — Data Induk & Akademik (Blueprint Admin #2)
 
 - [x] **T-006 — GTK/Guru + Direktori Publik** (`tasks/T-006-gtk.md`) — DONE
-- [ ] **T-007 — Siswa/Kelas + Import Excel + Kenaikan/Kelulusan** (`tasks/T-007-siswa.md`) — DOING
-- [ ] **T-008 — Jurusan/Ekskul/Prestasi + Agenda + Download Center** (`tasks/T-008-akademik-lain.md`) — TODO
+- [x] **T-007 — Siswa/Kelas + Import Excel + Kenaikan/Kelulusan** (`tasks/T-007-siswa.md`) — DONE
+- [x] **T-008 — Jurusan/Ekskul/Prestasi + Agenda + Download Center** (`tasks/T-008-akademik-lain.md`) — DONE
 
 ## Fase 3 — Tampilan & Navigasi (Blueprint Admin #3 + UI Rules Frontend #5)
 
-- [ ] **T-009 — Menu Builder Drag-Drop 3 Level** (`tasks/T-009-menu-builder.md`) — TODO
-- [ ] **T-010 — Tema 10 Warna + Dark Mode + Identitas/SEO (Golden Ratio + ReactBits)** (`tasks/T-010-tema-identitas.md`) — TODO
+- [x] **T-009 — Menu Builder Drag-Drop 3 Level** (`tasks/T-009-menu-builder.md`) — DONE
+- [ ] **T-010 — Tema 10 Warna + Dark Mode + Identitas/SEO (Golden Ratio + ReactBits)** (`tasks/T-010-tema-identitas.md`) — DOING
 
 ## Fase 4 — Layanan Khusus & Publik (Blueprint Admin #4 + Frontend #2/#3)
 

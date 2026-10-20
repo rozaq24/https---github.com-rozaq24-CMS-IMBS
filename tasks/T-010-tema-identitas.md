@@ -1,7 +1,7 @@
 ---
 id: T-010
 title: Tema 10 Warna + Dark Mode + Identitas/SEO
-status: TODO
+status: DOING
 priority: P0
 phase: 3
 domain: admin/tampilan
@@ -47,3 +47,5 @@ Ganti warna/mode/identitas situs tanpa coding + terapkan Golden Ratio + sentuhan
 
 ## Log Agen
 - (isi saat dikerjakan)
+
+- [2026-10-20] Codex - DOING: mulai setelah T-009; membaca cakupan tema, identitas, dan SEO.
