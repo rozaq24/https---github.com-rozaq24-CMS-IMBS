@@ -53,6 +53,18 @@ export const messageSchema = z.object({
   website: z.string().max(0).optional(),
 });
 
+export const teacherSchema = z.object({
+  nip: z.string().trim().min(3).max(30),
+  name: z.string().trim().min(3).max(120),
+  position: z.string().trim().min(2).max(100).default("Guru"),
+  rank: z.string().trim().max(80).optional(),
+  education: z.string().trim().max(200).optional(),
+  experience: z.string().trim().max(500).optional(),
+  subjects: z.string().trim().max(200).optional(),
+  photo: z.string().max(500).optional(),
+  active: z.boolean().default(true),
+});
+
 export const userSchema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
