@@ -8,7 +8,7 @@ export const revalidate = 60;
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const post = await db.post.findUnique({ where: { slug: params.slug } });
   if (!post) return { title: "Tidak ditemukan" };
-  return { title: post.title, description: post.excerpt || post.title };
+  return { title: post.title, description: post.excerpt || post.title, openGraph: { title: post.title, description: post.excerpt || post.title, ...(post.cover ? { images: [post.cover] } : {}) } };
 }
 
 export default async function BeritaDetail({ params }: { params: { slug: string } }) {

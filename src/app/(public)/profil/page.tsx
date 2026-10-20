@@ -4,7 +4,7 @@ import { GreetingCard } from "@/components/GreetingCard";
 
 export const revalidate = 60;
 
-export const metadata = { title: "Profil Sekolah", description: "Visi-misi, sejarah, dan sambutan Kepala Sekolah" };
+export const metadata = { title: "Profil Sekolah", description: "Visi-misi, sejarah, dan sambutan Kepala Sekolah", openGraph: { title: "Profil Sekolah", description: "Visi-misi, sejarah, dan sambutan Kepala Sekolah." } };
 
 export default async function ProfilPage() {
   const [greeting, visi, sejarah] = await Promise.all([

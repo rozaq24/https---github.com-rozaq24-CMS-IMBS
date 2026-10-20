@@ -9,6 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { identity } = await getSiteSettings();
   const title = identity.siteTitle;
   return {
+    metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
     title: { default: title, template: `%s | ${title}` },
     description: identity.description,
     keywords: identity.keywords.split(",").map((value) => value.trim()).filter(Boolean),

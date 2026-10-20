@@ -6,7 +6,7 @@ export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const teacher = await db.teacher.findFirst({ where: { id: params.id, active: true } });
-  return teacher ? { title: teacher.name, description: `${teacher.position} di sekolah` } : { title: "Guru tidak ditemukan" };
+  return teacher ? { title: teacher.name, description: `${teacher.position} di sekolah`, openGraph: { title: teacher.name, description: `${teacher.position} di sekolah`, ...(teacher.photo ? { images: [teacher.photo] } : {}) } } : { title: "Guru tidak ditemukan" };
 }
 
 export default async function TeacherProfile({ params }: { params: { id: string } }) {

@@ -23,16 +23,16 @@
 ## Fase 3 — Tampilan & Navigasi (Blueprint Admin #3 + UI Rules Frontend #5)
 
 - [x] **T-009 — Menu Builder Drag-Drop 3 Level** (`tasks/T-009-menu-builder.md`) — DONE
-- [ ] **T-010 — Tema 10 Warna + Dark Mode + Identitas/SEO (Golden Ratio + ReactBits)** (`tasks/T-010-tema-identitas.md`) — DOING
+- [x] **T-010 — Tema 10 Warna + Dark Mode + Identitas/SEO (Golden Ratio + ReactBits)** (`tasks/T-010-tema-identitas.md`) — DONE
 
 ## Fase 4 — Layanan Khusus & Publik (Blueprint Admin #4 + Frontend #2/#3)
 
-- [ ] **T-011 — SPMB Online (publik + validasi operator + statistik)** (`tasks/T-011-spmb.md`) — TODO
-- [ ] **T-012 — Halaman Publik: Profil/Agenda/Download/FAQ/Pengaduan/E-Learning/Perpus** (`tasks/T-012-halaman-publik.md`) — TODO
+- [x] **T-011 — SPMB Online (publik + validasi operator + statistik)** (`tasks/T-011-spmb.md`) — DONE
+- [ ] **T-012 — Halaman Publik: Profil/Agenda/Download/FAQ/Pengaduan/E-Learning/Perpus** (`tasks/T-012-halaman-publik.md`) — REVIEW
 
 ## Fase 5 — Hardening & Go-Live
 
-- [ ] **T-013 — Seed, QA, SEO, Aksesibilitas, Deploy** (`tasks/T-013-go-live.md`) — TODO
+- [ ] **T-013 — Seed, QA, SEO, Aksesibilitas, Deploy** (`tasks/T-013-go-live.md`) — DOING
 
 ## Cara Memakai Index Ini (untuk semua agent)
 

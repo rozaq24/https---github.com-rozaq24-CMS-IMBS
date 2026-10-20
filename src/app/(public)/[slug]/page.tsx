@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const page = await db.customPage.findUnique({ where: { slug: params.slug } });
   if (!page) return { title: "Tidak ditemukan" };
   const desc = page.content.replace(/<[^>]+>/g, "").slice(0, 160);
-  return { title: page.title, description: desc };
+  return { title: page.title, description: desc, openGraph: { title: page.title, description: desc } };
 }
 
 export default async function CustomPagePublic({ params }: { params: { slug: string } }) {

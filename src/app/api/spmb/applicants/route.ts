@@ -39,7 +39,8 @@ export async function POST(req: Request) {
   const files = fileKeys.map((key) => form.get(key));
   if (!files.some((file) => file instanceof File && file.size > 0)) return NextResponse.json({ error: "Unggah minimal satu berkas. Berkas yang kurang dapat dilengkapi melalui operator." }, { status: 400 });
   const uploads: { key: string; file: File; ext: string }[] = [];
-  for (const [index, item] of files.entries()) {
+  for (let index = 0; index < files.length; index++) {
+    const item = files[index];
     if (!(item instanceof File) || item.size === 0) continue;
     const type = ACCEPTED[item.type];
     if (!type || item.size > MAX_FILE) return NextResponse.json({ error: "Berkas harus PDF/JPG maksimal 8 MB." }, { status: 400 });

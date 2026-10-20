@@ -1,7 +1,7 @@
 ---
 id: T-013
 title: Seed, QA, SEO, Aksesibilitas, Deploy
-status: TODO
+status: DOING
 priority: P2
 phase: 5
 domain: infra
@@ -44,4 +44,4 @@ Go-live checklist: seed demo, QA lintas-role, SEO + a11y, panduan deploy SQLiteâ
 2. Ikuti DEPLOY.md ke environment staging.
 
 ## Log Agen
-- (isi saat dikerjakan)
+- [2026-10-20] Codex - DOING: mulai menyiapkan seed demo idempoten, QA checklist, SEO/a11y, dan panduan deploy sesuai T-013.
