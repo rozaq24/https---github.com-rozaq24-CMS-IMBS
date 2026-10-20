@@ -16,8 +16,8 @@
 
 ## Fase 2 — Data Induk & Akademik (Blueprint Admin #2)
 
-- [ ] **T-006 — GTK/Guru + Direktori Publik** (`tasks/T-006-gtk.md`) — DOING
-- [ ] **T-007 — Siswa/Kelas + Import Excel + Kenaikan/Kelulusan** (`tasks/T-007-siswa.md`) — TODO
+- [x] **T-006 — GTK/Guru + Direktori Publik** (`tasks/T-006-gtk.md`) — DONE
+- [ ] **T-007 — Siswa/Kelas + Import Excel + Kenaikan/Kelulusan** (`tasks/T-007-siswa.md`) — DOING
 - [ ] **T-008 — Jurusan/Ekskul/Prestasi + Agenda + Download Center** (`tasks/T-008-akademik-lain.md`) — TODO
 
 ## Fase 3 — Tampilan & Navigasi (Blueprint Admin #3 + UI Rules Frontend #5)

@@ -1,7 +1,7 @@
 ---
 id: T-007
 title: Siswa/Kelas + Import Excel + Kenaikan/Kelulusan
-status: TODO
+status: DOING
 priority: P1
 phase: 2
 domain: admin/akademik
@@ -45,3 +45,5 @@ Rombel + wali kelas + import Excel massal + proses kenaikan/kelulusan batch.
 
 ## Log Agen
 - (isi saat dikerjakan)
+
+- [2026-10-20] Codex - DOING: membaca acceptance criteria dan memetakan implementasi siswa yang tersedia.

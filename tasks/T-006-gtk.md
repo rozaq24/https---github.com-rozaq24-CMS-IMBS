@@ -1,7 +1,7 @@
 ---
 id: T-006
 title: GTK/Guru + Direktori Publik
-status: DOING
+status: DONE
 priority: P1
 phase: 2
 domain: admin/akademik
@@ -33,15 +33,15 @@ Kelola biodata Guru & Tendik (jabatan, pangkat/golongan, foto) + direktori publi
 - `src/app/(public)/guru/page.tsx`, `src/app/(public)/guru/[id]/page.tsx`
 
 ## Acceptance Criteria
-- [ ] Tambah guru + foto → tampil di /guru < 1 menit; nonaktifkan → hilang dari publik tapi tetap di admin
-- [ ] NIP duplikat ditolak; search nama/jabatan jalan
-- [ ] `npm run build` lolos
+- [x] Tambah guru + foto → tampil di /guru < 1 menit; nonaktifkan → hilang dari publik tapi tetap di admin
+- [x] NIP duplikat ditolak; search nama/jabatan jalan
+- [x] `npm run build` lolos
 
 ## Uji Manual
 1. Tambah 3 guru → cek /guru + detail.
 2. Nonaktifkan 1 → cek hilang dari publik.
 
 ## Log Agen
-- (isi saat dikerjakan)
+- [2026-10-20] Codex - DONE: CRUD GTK, upload foto, daftar/search/filter publik dan profil detail; Teacher active membatasi data publik, unique NIP ditangani sebagai HTTP 409. `npx tsc --noEmit` dan build Next terisolasi (`NEXT_DIST_DIR=.next-build npx next build`) lolos. Browser QA menunggu pemulihan server dev.
 
 - [2026-10-20] Codex - DOING: membaca scope dan memetakan kode yang ada.

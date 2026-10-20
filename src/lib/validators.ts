@@ -65,6 +65,23 @@ export const teacherSchema = z.object({
   active: z.boolean().default(true),
 });
 
+export const classroomSchema = z.object({
+  name: z.string().trim().min(2).max(80),
+  year: z.string().trim().min(4).max(20),
+  majorId: z.string().nullable().optional(),
+  homeroomTeacherId: z.string().nullable().optional(),
+});
+
+export const studentSchema = z.object({
+  nis: z.string().trim().min(1).max(30),
+  nisn: z.string().trim().max(30).optional(),
+  name: z.string().trim().min(3).max(120),
+  gender: z.enum(["L", "P"]).optional(),
+  classId: z.string().nullable().optional(),
+  year: z.string().trim().max(20).optional(),
+  status: z.enum(["AKTIF", "LULUS", "PINDAH", "KELUAR"]).default("AKTIF"),
+});
+
 export const userSchema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
