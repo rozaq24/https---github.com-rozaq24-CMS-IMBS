@@ -1,0 +1,41 @@
+[    1325ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/galeri:0
+[    1883ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[    2069ms] Error: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.
+    at new PrismaClient (file://E:\CMS IMBS\node_modules\.prisma\client\default.js:43:11)
+    at eval (webpack-internal:///(rsc)/./src/lib/db.ts:9:38)
+    at (rsc)/./src/lib/db.ts (file://E:\CMS IMBS\.next\server\app\(public)\galeri\page.js:211:1)
+    at __webpack_require__ (file://E:\CMS IMBS\.next\server\webpack-runtime.js:33:43)
+    at eval (webpack-internal:///(rsc)/./src/app/(public)/galeri/page.tsx:9:65)
+    at (rsc)/./src/app/(public)/galeri/page.tsx (file://E:\CMS IMBS\.next\server\app\(public)\galeri\page.js:151:1)
+    at __webpack_require__ (file://E:\CMS IMBS\.next\server\webpack-runtime.js:33:43)
+    at async e9 (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:396530)
+    at async tb (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400044)
+    at async tS (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400605)
+    at async tS (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400736)
+    at async tS (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400736)
+    at async tS (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400736)
+    at async tR (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:36:2320)
+    at async (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:36:2989)
+[    2008ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[    2798ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[    3938ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[    5326ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/galeri:0
+[    9199ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[    9292ms] Error: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.
+    at new PrismaClient (file://E:\CMS IMBS\node_modules\.prisma\client\default.js:43:11)
+    at eval (webpack-internal:///(rsc)/./src/lib/db.ts:9:38)
+    at (rsc)/./src/lib/db.ts (file://E:\CMS IMBS\.next\server\app\(public)\galeri\page.js:211:1)
+    at __webpack_require__ (file://E:\CMS IMBS\.next\server\webpack-runtime.js:33:43)
+    at eval (webpack-internal:///(rsc)/./src/app/(public)/galeri/page.tsx:9:65)
+    at (rsc)/./src/app/(public)/galeri/page.tsx (file://E:\CMS IMBS\.next\server\app\(public)\galeri\page.js:151:1)
+    at __webpack_require__ (file://E:\CMS IMBS\.next\server\webpack-runtime.js:33:43)
+    at async e9 (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:396530)
+    at async tb (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400044)
+    at async tS (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400605)
+    at async tS (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400736)
+    at async tS (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400736)
+    at async tS (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:400736)
+    at async tR (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:36:2320)
+    at async (file://E:\CMS IMBS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:36:2989)
+[    9313ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[    9723ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/favicon.ico:0

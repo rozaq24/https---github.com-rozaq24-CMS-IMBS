@@ -1,0 +1,6 @@
+- main [ref=f6e2]:
+  - heading "Galeri Sekolah" [level=1] [ref=f6e3]
+  - generic [ref=f6e4]:
+    - navigation "Filter kategori galeri" [ref=f6e5]:
+      - button "Semua" [ref=f6e6]
+    - paragraph [ref=f6e7]: Belum ada foto galeri.

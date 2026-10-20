@@ -1,0 +1,278 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ENUM (catatan): SQLite tidak mendukung enum native Prisma.
+// Role/PostType/PostStatus/ApplicantStatus disimpan sebagai String,
+// validasi nilai via Zod di src/lib/validators.ts. Saat migrasi ke
+// Postgres (prod), boleh dikembalikan ke enum native.
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("OPERATOR_BERITA")
+  avatar       String?
+  active       Boolean  @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  posts        Post[]
+  logs         SystemLog[]
+  moderated    Comment[]  @relation("Moderator")
+  verifiedSpmb SPMBApplicant[] @relation("Verifier")
+  @@index([role])
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  title       String
+  excerpt     String?
+  content     String
+  cover       String?
+  type        String   @default("BERITA")
+  status      String   @default("DRAFT")
+  publishedAt DateTime?
+  views       Int        @default(0)
+  authorId    String
+  author      User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  @@index([type, status, publishedAt])
+}
+
+model CustomPage {
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  title      String
+  content    String
+  showInMenu Boolean  @default(true)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Greeting {
+  id            Int      @id @default(1)
+  title         String   @default("Sambutan Kepala Sekolah")
+  body          String   @default("Selamat datang di website resmi sekolah kami.")
+  principalName String   @default("Kepala Sekolah")
+  photo         String?
+  active        Boolean  @default(true)
+  updatedAt     DateTime @updatedAt
+}
+
+model Album {
+  id        String   @id @default(cuid())
+  title     String
+  category  String   @default("Kegiatan")
+  cover     String?
+  createdAt DateTime @default(now())
+  photos    Photo[]
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  albumId   String
+  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  url       String
+  caption   String?
+  createdAt DateTime @default(now())
+}
+
+model Teacher {
+  id         String   @id @default(cuid())
+  nip        String   @unique
+  name       String
+  position   String   @default("Guru")
+  rank       String?
+  education  String?
+  experience String?
+  subjects   String?
+  photo      String?
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  homerooms  ClassRoom[]
+  achievements Achievement[]
+}
+
+model Major {
+  id        String      @id @default(cuid())
+  code      String      @unique
+  name      String
+  desc      String?
+  classes   ClassRoom[]
+}
+
+model ClassRoom {
+  id                 String   @id @default(cuid())
+  name               String   @unique
+  year               String
+  majorId            String?
+  major              Major?   @relation(fields: [majorId], references: [id])
+  homeroomTeacherId  String?
+  homeroomTeacher    Teacher? @relation(fields: [homeroomTeacherId], references: [id])
+  students           Student[]
+}
+
+model Student {
+  id        String    @id @default(cuid())
+  nis       String    @unique
+  nisn      String?
+  name      String
+  gender    String?
+  classId   String?
+  class     ClassRoom? @relation(fields: [classId], references: [id])
+  year      String?
+  status    String    @default("AKTIF")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  achievements Achievement[]
+  @@index([classId, status])
+}
+
+model Extracurricular {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  coach     String?
+  schedule  String?
+  desc      String?
+  photo     String?
+  active    Boolean  @default(true)
+}
+
+model Achievement {
+  id        String   @id @default(cuid())
+  title     String
+  level     String?
+  year      String?
+  photo     String?
+  desc      String?
+  studentId String?
+  student   Student? @relation(fields: [studentId], references: [id])
+  teacherId String?
+  teacher   Teacher? @relation(fields: [teacherId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Agenda {
+  id        String   @id @default(cuid())
+  title     String
+  desc      String?
+  location  String?
+  startAt   DateTime
+  endAt     DateTime?
+  createdAt DateTime @default(now())
+  @@index([startAt])
+}
+
+model DownloadFile {
+  id        String   @id @default(cuid())
+  title     String
+  desc      String?
+  fileUrl   String
+  size      Int?
+  downloads Int      @default(0)
+  category  String   @default("Umum")
+  public    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model MenuItem {
+  id       String     @id @default(cuid())
+  label    String
+  href     String     @default("#")
+  pageSlug String?
+  parentId String?
+  parent   MenuItem?  @relation("MenuTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children MenuItem[] @relation("MenuTree")
+  order    Int        @default(0)
+  visible  Boolean    @default(true)
+  target   String     @default("_self")
+}
+
+model SiteSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id          String   @id @default(cuid())
+  postId      String
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  name        String
+  email       String?
+  body        String
+  approved    Boolean  @default(false)
+  moderatedBy String?
+  moderator   User?    @relation("Moderator", fields: [moderatedBy], references: [id])
+  createdAt   DateTime @default(now())
+  @@index([postId, approved])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  subject   String
+  body      String
+  read      Boolean  @default(false)
+  replied   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model SPMBPeriod {
+  id         String          @id @default(cuid())
+  name       String
+  year       String
+  quota      Int             @default(100)
+  openAt     DateTime
+  closeAt    DateTime
+  terms      String?
+  active     Boolean         @default(true)
+  applicants SPMBApplicant[]
+}
+
+model SPMBApplicant {
+  id         String          @id @default(cuid())
+  periodId   String
+  period     SPMBPeriod      @relation(fields: [periodId], references: [id], onDelete: Cascade)
+  code       String          @unique
+  name       String
+  nik        String?
+  email      String?
+  phone      String?
+  origin     String?
+  parentName String?
+  files      String          @default("[]")
+  status     String          @default("PENDING")
+  note       String?
+  verifiedBy String?
+  verifier   User?           @relation("Verifier", fields: [verifiedBy], references: [id])
+  verifiedAt DateTime?
+  createdAt  DateTime        @default(now())
+  @@index([periodId, status])
+}
+
+model SystemLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  ip        String?
+  mac       String?
+  action    String
+  detail    String?
+  createdAt DateTime @default(now())
+  @@index([userId, createdAt])
+}
