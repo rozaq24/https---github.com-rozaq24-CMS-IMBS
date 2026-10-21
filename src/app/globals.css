@@ -27,8 +27,9 @@ body { @apply bg-slate-50 text-slate-800 antialiased; font-size: 16px; }
 
 @layer components {
   .btn { @apply inline-flex items-center justify-center font-semibold transition active:scale-[.98]; padding: 13px 21px; border-radius: 13px; font-size: 16px; }
-  .btn-primary { @apply btn text-white shadow-lg; background: linear-gradient(135deg, rgb(var(--brand-600)), rgb(var(--accent-500))); }
-  .btn-outline { @apply btn border-2; border-color: rgb(var(--brand-600)); color: rgb(var(--brand-700)); }
+  .btn-primary { @apply btn text-white shadow-lg hover:-translate-y-[2px] hover:shadow-xl; background: linear-gradient(135deg, rgb(var(--brand-600)), rgb(var(--accent-500))); }
+  .btn-outline { @apply btn border-2 hover:-translate-y-[2px] hover:text-white; border-color: rgb(var(--brand-600)); color: rgb(var(--brand-700)); }
+  .btn-outline:hover { background-color: rgb(var(--brand-600)); }
   .card { @apply bg-white rounded-[21px] shadow-[0_8px_34px_-12px_rgba(0,0,0,.18)] border border-slate-100 p-[21px]; }
   .dark .card { @apply bg-slate-900 border-slate-800; }
   .tbl { @apply w-full text-[16px]; }
@@ -43,6 +44,7 @@ body { @apply bg-slate-50 text-slate-800 antialiased; font-size: 16px; }
   .animate-list { animation: list-in .35s ease-out both; }
   .spotlight-card { background-image: radial-gradient(ellipse at 50% 0%, rgb(var(--brand-500) / .08), transparent 70%); transition: transform .2s ease, box-shadow .2s ease; }
   .spotlight-card:hover { transform: translateY(-3px); box-shadow: 0 13px 34px -16px rgb(var(--brand-700) / .45); }
+  .skip-link { @apply fixed left-[13px] top-[13px] z-[100] -translate-y-20 rounded-[13px] bg-slate-900 px-[21px] py-[13px] font-semibold text-white transition-transform focus:translate-y-0; }
 }
 
 @keyframes list-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }

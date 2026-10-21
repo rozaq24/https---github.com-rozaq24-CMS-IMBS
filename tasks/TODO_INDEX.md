@@ -12,7 +12,7 @@
 ## Fase 1 — Blog & Konten Web (Blueprint Admin #1)
 
 - [x] **T-004 — Custom Pages + Kata Sambutan Kepsek** (`tasks/T-004-pages-sambutan.md`) — DONE
-- [ ] **T-005 — Galeri & Media + Komentar/Messages** (`tasks/T-005-galeri-komentar.md`) — REVIEW
+- [x] **T-005 — Galeri & Media + Komentar/Messages** (`tasks/T-005-galeri-komentar.md`) — DONE
 
 ## Fase 2 — Data Induk & Akademik (Blueprint Admin #2)
 
@@ -28,11 +28,11 @@
 ## Fase 4 — Layanan Khusus & Publik (Blueprint Admin #4 + Frontend #2/#3)
 
 - [x] **T-011 — SPMB Online (publik + validasi operator + statistik)** (`tasks/T-011-spmb.md`) — DONE
-- [ ] **T-012 — Halaman Publik: Profil/Agenda/Download/FAQ/Pengaduan/E-Learning/Perpus** (`tasks/T-012-halaman-publik.md`) — REVIEW
+- [x] **T-012 — Halaman Publik: Profil/Agenda/Download/FAQ/Pengaduan/E-Learning/Perpus** (`tasks/T-012-halaman-publik.md`) — DONE
 
 ## Fase 5 — Hardening & Go-Live
 
-- [ ] **T-013 — Seed, QA, SEO, Aksesibilitas, Deploy** (`tasks/T-013-go-live.md`) — DOING
+- [ ] **T-013 — Seed, QA, SEO, Aksesibilitas, Deploy** (`tasks/T-013-go-live.md`) — REVIEW
 
 ## Cara Memakai Index Ini (untuk semua agent)
 

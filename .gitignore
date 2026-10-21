@@ -1,6 +1,8 @@
 node_modules/
+.playwright-cli/
 .next/
 .next-build/
+.next-qa-verify/
 out/
 dist/
 *.db*

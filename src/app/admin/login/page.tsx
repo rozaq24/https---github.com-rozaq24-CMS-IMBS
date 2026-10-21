@@ -47,7 +47,7 @@ function LoginForm() {
       </label>
       {err && <p className="text-[14px] text-rose-600 bg-rose-50 border border-rose-200 rounded-[13px] p-[13px]">{err}</p>}
       <button className="btn-primary w-full" disabled={loading}>{loading ? "Memeriksa..." : "Masuk"}</button>
-      <p className="text-[13px] text-slate-500">Demo awal: <b>admin@sekolah.sch.id / admin123</b> (jalankan <code>npx prisma db seed</code> dulu).</p>
+      <p className="text-[13px] text-slate-500">Demo: <b>admin@sekolah.sch.id / ImbsDemo!2026</b> (jalankan <code>npx prisma db seed</code> dulu).</p>
     </form>
   );
 }

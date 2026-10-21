@@ -1,7 +1,7 @@
----
+﻿---
 id: T-013
 title: Seed, QA, SEO, Aksesibilitas, Deploy
-status: DOING
+status: REVIEW
 priority: P2
 phase: 5
 domain: infra
@@ -34,7 +34,7 @@ Go-live checklist: seed demo, QA lintas-role, SEO + a11y, panduan deploy SQLite�
 - `.env.example` (final)
 
 ## Acceptance Criteria
-- [ ] `npx prisma db seed` sukses + login demo semua role jalan
+- [x] `npx prisma db seed` sukses + login demo semua role jalan
 - [ ] QA_CHECKLIST terisi ✅ semua (dengan nama penguji + tanggal)
 - [ ] `npm run build` + `npx prisma validate` lolos; Lighthouse homepage ≥ 85
 - [ ] DEPLOY.md bisa diikuti orang baru tanpa tanya (uji baca ulang)
@@ -44,4 +44,11 @@ Go-live checklist: seed demo, QA lintas-role, SEO + a11y, panduan deploy SQLite�
 2. Ikuti DEPLOY.md ke environment staging.
 
 ## Log Agen
-- [2026-10-20] Codex - DOING: mulai menyiapkan seed demo idempoten, QA checklist, SEO/a11y, dan panduan deploy sesuai T-013.
+- [2026-10-20] Codex - REVIEW: matriks API lima role pada delapan endpoint (users, settings, posts, pages, students, classes, SPMB, publik) cocok dengan hasil 200/403 yang diharapkan; 40/40 pemeriksaan lulus. Import XLSX melalui UI menghasilkan preview 95 valid + 5 error rinci, commit 95 baris sukses; semua siswa sintetis dibersihkan. QA checklist diperbarui; task tetap REVIEW karena skor Lighthouse production, audit aksesibilitas lengkap, dan staging belum terpenuhi.
+- [2026-10-20] Codex - REVIEW: `npm run build` ulang pada salinan verifikasi terisolasi dengan source terbaru lolos (78 rute); `npx prisma validate` dan `npx tsc --noEmit` lolos. `npm run lint` belum tersedia karena proyek belum memiliki ESLint/config, sehingga TypeScript dipakai sebagai fallback sesuai AGENTS.
+- [2026-10-20] Codex - REVIEW: seed idempoten, docs deploy/QA, sitemap/robots, alt audit, dan backup-restore SQLite selesai. Seed berhasil dijalankan dua kali; snapshot dan restore pada salinan menunjukkan 21 tabel cocok dan quick_check ok. `npx tsc --noEmit`, `npx prisma validate`, serta `npm run build` pada salinan verifikasi bersih (Next 14.2.35) lolos. `npm audit --omit=dev` masih menemukan 29 temuan; Next 14 dipertahankan sesuai AGENTS. Role login, QA end-to-end, screenshot, dan Lighthouse belum bisa dijalankan karena Playwright timeout ke server localhost yang aset `.next`-nya tidak utuh; task tetap REVIEW.
+- [2026-10-20] Codex - REVIEW: seed utama berhasil dijalankan; kelima akun demo berhasil login. Uji akses yang dijalankan: OPERATOR_BERITA dapat membuka posting/inbox, OPERATOR_SPMB dapat membuka SPMB namun ditolak pada posting, GURU dan WALI_READONLY ditolak pada posting. Satu alur SPMB dengan berkas PDF valid menghasilkan 201 dan status dapat dicek; berkas ditolak tanpa login (401), data uji dan file dihapus. Backup/restore, schema validation, dan build bersih sebelumnya lolos. Screenshot tersimpan; Lighthouse belum memenuhi Performance ≥85 (64 pada port 3000, 48 pada 3001). Matriks akses lengkap, import 100 baris, audit Lighthouse per halaman, dan staging belum lulus; task tetap REVIEW.
+- [2026-10-20] Codex - REVIEW: pembacaan ulang DEPLOY.md menemukan prasyarat Node 20 tidak sesuai dengan engine sanitize-html 2.18.1 (Node >=22.12); panduan lokal dan VM diperbarui ke Node 22.12+. Prosedur dibaca ulang, tetapi belum dijalankan pada staging; acceptance tetap terbuka.
+- [2026-10-20] Codex - REVIEW: Playwright keyboard QA lokal lulus untuk nav desktop (dropdown dengan Enter), modal galeri (fokus masuk, Tab/Shift+Tab terperangkap, Escape menutup dan fokus kembali), menu mobile (Enter/Escape), pencarian FAQ beasiswa, serta label native lima field pengaduan. Ditemukan fokus modal sebelumnya tidak dipindahkan; perbaikan fokus/trap diterapkan di Masonry. Lighthouse production, sebagian alur QA lintas modul, dan staging tetap terbuka.
+- [2026-10-20] Codex - REVIEW: setelah perbaikan Masonry, `npm run build` pada salinan verifikasi dengan dependensi lockfile Next.js 14.2.35 + Prisma Client generate lolos (78 rute); `npx tsc --noEmit` dan `npx prisma validate` pada workspace lolos. Install workspace sendiri masih 14.2.18; tidak disentuh karena server dev sedang memakai node_modules tersebut.
+- [2026-10-20] Codex - REVIEW: Playwright keyboard QA lokal lulus untuk nav desktop (dropdown dengan Enter), modal galeri (fokus masuk, Tab/Shift+Tab terperangkap, Escape menutup dan fokus kembali), menu mobile (Enter/Escape), pencarian FAQ beasiswa, serta label native lima field pengaduan. Ditemukan fokus modal sebelumnya tidak dipindahkan; perbaikan fokus/trap diterapkan di Masonry. Lighthouse production, sebagian alur QA lintas modul, dan staging tetap terbuka.

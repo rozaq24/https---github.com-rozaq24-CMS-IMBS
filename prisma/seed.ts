@@ -11,8 +11,8 @@ async function main() {
     ["guru@sekolah.sch.id", "Guru Demo", "GURU"],
     ["wali@sekolah.sch.id", "Wali Demo", "WALI_READONLY"],
   ] as const;
-  const admin = await db.user.upsert({ where: { email: users[0][0] }, update: {}, create: { email: users[0][0], name: users[0][1], role: users[0][2], passwordHash } });
-  for (const [email, name, role] of users.slice(1)) await db.user.upsert({ where: { email }, update: {}, create: { email, name, role, passwordHash } });
+  const admin = await db.user.upsert({ where: { email: users[0][0] }, update: { name: users[0][1], role: users[0][2], passwordHash, active: true }, create: { email: users[0][0], name: users[0][1], role: users[0][2], passwordHash } });
+  for (const [email, name, role] of users.slice(1)) await db.user.upsert({ where: { email }, update: { name, role, passwordHash, active: true }, create: { email, name, role, passwordHash } });
 
   const settings = [
     ["site.theme", "emerald"],
