@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export type Greeting = { title: string; body: string; principalName: string; photo: string | null; active: boolean };
 
@@ -7,7 +9,7 @@ export function GreetingCard({ greeting, compact = false }: { greeting: Greeting
   if (!greeting || !greeting.active) return null;
   const paragraphs = greeting.body.split(/\n{2,}|\r\n{2,}/).map((p) => p.trim()).filter(Boolean);
   return (
-    <section className={`card spotlight-card flex gap-[21px] flex-col items-start text-slate-900 dark:text-slate-100 ${compact ? "md:flex-col" : "md:flex-row"}`}>
+    <Card className={`spotlight-card flex gap-[21px] flex-col items-start text-slate-900 dark:text-slate-100 ${compact ? "md:flex-col" : "md:flex-row"}`} as="section">
       {greeting.photo ? (
         <img src={greeting.photo} alt={greeting.principalName} className={`rounded-[21px] w-full object-cover ${compact ? "h-[300px]" : "h-[260px] md:w-[220px]"}`} />
       ) : (
@@ -21,8 +23,8 @@ export function GreetingCard({ greeting, compact = false }: { greeting: Greeting
         {(compact ? paragraphs.slice(0, 1) : paragraphs).map((p, i) => (
           <p key={i} className="mt-[13px] text-[16px] text-slate-600">{p}</p>
         ))}
-        {compact && <Link href="/sambutan" className="btn-outline !py-[8px] mt-[13px] inline-block">Baca Selengkapnya</Link>}
+        {compact && <Button asChild variant="outline"><Link href="/sambutan" className="!py-[8px] mt-[13px] inline-block">Baca Selengkapnya</Link></Button>}
       </div>
-    </section>
+    </Card>
   );
 }

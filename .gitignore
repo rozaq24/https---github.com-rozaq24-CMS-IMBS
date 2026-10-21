@@ -3,6 +3,7 @@ node_modules/
 .next/
 .next-build/
 .next-qa-verify/
+.next-ui-migration-verify/
 out/
 dist/
 *.db*

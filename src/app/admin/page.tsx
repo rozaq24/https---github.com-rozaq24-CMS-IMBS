@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { Button } from "@/components/ui/button";
 
 const dateShort = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short" });
 const dateLong = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" });
@@ -45,9 +46,9 @@ export default async function AdminHome() {
           </h1>
           <p className="mt-[5px] text-[14px] text-slate-500 dark:text-slate-400">Ringkasan aktivitas CMS IMBS hari ini.</p>
         </div>
-        <Link href="/admin/posts/baru" className="btn-primary !rounded-[10px] !px-[16px] !py-[10px] !text-[14px]">
+        <Button asChild variant="default"><Link href="/admin/posts/baru" className="!rounded-[10px] !px-[16px] !py-[10px] !text-[14px]">
           <span aria-hidden="true" className="mr-[7px] text-[17px] font-normal">＋</span> Tulis posting
-        </Link>
+        </Link></Button>
       </header>
 
       <section aria-label="Ringkasan CMS" className="grid gap-[13px] sm:grid-cols-2 xl:grid-cols-4">

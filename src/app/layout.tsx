@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import "./globals.css";
+import "@/components/echo/echo-theme.css";
 import { Providers } from "./providers";
 import { getSiteSettings } from "@/lib/settings";
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { Comments } from "@/components/Comments";
+import { Card } from "@/components/ui/card";
 
 export const revalidate = 60;
 
@@ -27,12 +28,12 @@ export default async function BeritaDetail({ params }: { params: { slug: string 
       <h1 className="h-gold-1">{post.title}</h1>
       <p className="text-[13px] text-slate-500">Oleh {post.author?.name} • {post.publishedAt ? new Date(post.publishedAt).toLocaleString("id-ID") : ""} • 👁 {post.views + 1}</p>
       {post.cover && <img src={post.cover} alt={post.title} className="rounded-[21px] w-full object-cover" />}
-      <article className="card prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+      <Card as="article" className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
       {related.length > 0 && (
         <section className="space-y-[13px]">
           <h2 className="h-gold-2">Terkait</h2>
           <div className="grid md:grid-cols-3 gap-[13px]">
-            {related.map((r) => <Link key={r.id} href={`/berita/${r.slug}`} className="card text-[14px] font-semibold">{r.title}</Link>)}
+            {related.map((r) => <Card key={r.id} asChild className="text-[14px] font-semibold"><Link href={`/berita/${r.slug}`}>{r.title}</Link></Card>)}
           </div>
         </section>
       )}

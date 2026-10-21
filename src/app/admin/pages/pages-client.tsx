@@ -1,6 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
 
 type Page = { id: string; slug: string; title: string; showInMenu: boolean; order: number };
 
@@ -26,29 +30,29 @@ export function PagesClient() {
 
   return (
     <div className="space-y-[21px]">
-      {msg && <p className="card text-[14px]">{msg}</p>}
-      <div className="card flex gap-[13px] flex-wrap">
-        <input className="border rounded-[13px] px-[13px] py-[8px]" placeholder="Cari judul/slug..." value={q} onChange={(e) => setQ(e.target.value)} />
-        <button className="btn-outline !py-[8px]" onClick={load}>Cari</button>
-        <Link href="/admin/pages/baru" className="btn-primary !py-[8px]">+ Halaman Baru</Link>
-      </div>
-      <div className="card overflow-x-auto">
-        <table className="tbl">
-          <thead><tr><th>Judul</th><th>Slug</th><th>Urutan</th><th>Menu</th><th>Aksi</th></tr></thead>
-          <tbody>
+      {msg && <Card className="text-[14px]" as="p">{msg}</Card>}
+      <Card className="flex gap-[13px] flex-wrap">
+        <Input className="border rounded-[13px] px-[13px] py-[8px]" placeholder="Cari judul/slug..." value={q} onChange={(e) => setQ(e.target.value)} />
+        <Button className="!py-[8px]" onClick={load} variant="outline">Cari</Button>
+        <Button asChild variant="default"><Link href="/admin/pages/baru" className="!py-[8px]">+ Halaman Baru</Link></Button>
+      </Card>
+      <Card className="overflow-x-auto">
+        <Table>
+          <TableHeader><TableRow><TableHead>Judul</TableHead><TableHead>Slug</TableHead><TableHead>Urutan</TableHead><TableHead>Menu</TableHead><TableHead>Aksi</TableHead></TableRow></TableHeader>
+          <TableBody>
             {data.map((p) => (
-              <tr key={p.id}>
-                <td><Link className="underline" href={`/admin/pages/${p.id}`}>{p.title}</Link></td>
-                <td><a className="underline text-[13px]" href={`/${p.slug}`} target="_blank">/{p.slug}</a></td>
-                <td>{p.order}</td>
-                <td>{p.showInMenu ? "✅" : "—"}</td>
-                <td><button className="underline text-rose-600 text-[14px]" onClick={() => remove(p.id, p.title)}>Hapus</button></td>
-              </tr>
+              <TableRow key={p.id}>
+                <TableCell><Link className="underline" href={`/admin/pages/${p.id}`}>{p.title}</Link></TableCell>
+                <TableCell><a className="underline text-[13px]" href={`/${p.slug}`} target="_blank">/{p.slug}</a></TableCell>
+                <TableCell>{p.order}</TableCell>
+                <TableCell>{p.showInMenu ? "✅" : "—"}</TableCell>
+                <TableCell><Button className="underline text-rose-600 text-[14px]" onClick={() => remove(p.id, p.title)} variant="ghost">Hapus</Button></TableCell>
+              </TableRow>
             ))}
-            {data.length === 0 && <tr><td colSpan={5} className="text-center text-slate-500">Belum ada halaman. Contoh: Visi-Misi, Sejarah.</td></tr>}
-          </tbody>
-        </table>
-      </div>
+            {data.length === 0 && <TableRow><TableCell colSpan={5} className="text-center text-slate-500">Belum ada halaman. Contoh: Visi-Misi, Sejarah.</TableCell></TableRow>}
+          </TableBody>
+        </Table>
+      </Card>
     </div>
   );
 }

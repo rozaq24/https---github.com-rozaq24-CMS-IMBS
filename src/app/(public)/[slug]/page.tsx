@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
+import { Card } from "@/components/ui/card";
 
 export const revalidate = 60;
 
@@ -21,7 +22,7 @@ export default async function CustomPagePublic({ params }: { params: { slug: str
   return (
     <main className="mx-auto max-w-3xl px-[21px] py-[34px] space-y-[21px]">
       <h1 className="h-gold-1">{page.title}</h1>
-      <article className="card prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
+      <Card as="article" className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
     </main>
   );
 }

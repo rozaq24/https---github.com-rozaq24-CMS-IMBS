@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { GreetingCard } from "@/components/GreetingCard";
+import { Card } from "@/components/ui/card";
 
 export const revalidate = 60;
 
@@ -17,16 +18,16 @@ export default async function ProfilPage() {
       <h1 className="h-gold-1">Profil <span className="grad-text">Sekolah</span></h1>
       <GreetingCard greeting={greeting} compact />
       <div className="grid md:grid-cols-2 gap-[21px]">
-        <article className="card">
+        <Card className="" as="article">
           <h2 className="h-gold-2">Visi-Misi</h2>
           {visi ? <div className="prose max-w-none mt-[13px]" dangerouslySetInnerHTML={{ __html: visi.content }} /> : <p className="text-slate-500 mt-[13px]">Belum diisi — buat via /admin/pages (slug visi-misi).</p>}
           {visi && <Link href="/visi-misi" className="underline text-[14px]">Buka halaman penuh →</Link>}
-        </article>
-        <article className="card">
+        </Card>
+        <Card className="" as="article">
           <h2 className="h-gold-2">Sejarah</h2>
           {sejarah ? <div className="prose max-w-none mt-[13px]" dangerouslySetInnerHTML={{ __html: sejarah.content }} /> : <p className="text-slate-500 mt-[13px]">Belum diisi — buat via /admin/pages (slug sejarah).</p>}
           {sejarah && <Link href="/sejarah" className="underline text-[14px]">Buka halaman penuh →</Link>}
-        </article>
+        </Card>
       </div>
     </main>
   );
