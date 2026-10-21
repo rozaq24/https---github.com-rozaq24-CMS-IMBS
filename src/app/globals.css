@@ -4,30 +4,42 @@
 
 :root {
   --ratio: 1.618;
+  --font-size-base: 1rem;
+  --font-size-lg: calc(var(--font-size-base) * var(--ratio));
+  --font-size-xl: calc(var(--font-size-lg) * var(--ratio));
+  --font-size-display: clamp(2.618rem, 6vw, 5.25rem);
+  --public-paper: 247 246 240;
+  --public-ink: 19 43 37;
+  --public-night: 16 43 36;
+  --public-cream: 247 245 236;
+  --public-moss: 233 236 227;
+  --public-haze: 217 222 208;
+  --public-muted: 92 110 100;
+  --public-line: 220 224 215;
   --brand-50: 236 253 245;
   --brand-100: 209 250 229;
   --brand-500: 16 185 129;
   --brand-600: 4 120 87;
   --brand-700: 6 95 70;
   --accent-500: 109 40 217;
-  --background: 248 250 252;
-  --foreground: 30 41 59;
-  --card: 255 255 255;
-  --card-foreground: 30 41 59;
-  --popover: 255 255 255;
-  --popover-foreground: 30 41 59;
+  --background: 247 246 240;
+  --foreground: 19 43 37;
+  --card: 255 254 248;
+  --card-foreground: 19 43 37;
+  --popover: 255 254 248;
+  --popover-foreground: 19 43 37;
   --primary: var(--brand-600);
   --primary-foreground: 255 255 255;
-  --secondary: 241 245 249;
-  --secondary-foreground: 30 41 59;
-  --muted: 241 245 249;
-  --muted-foreground: 100 116 139;
-  --accent: 236 253 245;
+  --secondary: 232 235 226;
+  --secondary-foreground: 19 43 37;
+  --muted: 238 239 231;
+  --muted-foreground: 92 110 100;
+  --accent: 222 237 226;
   --accent-foreground: 6 95 70;
   --destructive: 185 28 28;
   --destructive-foreground: 255 255 255;
-  --border: 226 232 240;
-  --input: 226 232 240;
+  --border: 220 224 215;
+  --input: 220 224 215;
   --ring: var(--brand-500);
   --sidebar: 255 255 255;
   --sidebar-foreground: 30 41 59;
@@ -50,8 +62,15 @@ html[data-theme="cyan"] { --brand-500: 6 182 212; --brand-600: 14 116 144; --bra
 html[data-theme="lime"] { --brand-500: 132 204 22; --brand-600: 77 124 15; --brand-700: 63 98 18; --accent-500: 15 118 110; }
 html[data-theme="slate"] { --brand-500: 100 116 139; --brand-600: 71 85 105; --brand-700: 51 65 85; --accent-500: 4 120 87; }
 
-body { @apply bg-background text-foreground antialiased; font-size: 16px; }
+body { background-color: rgb(var(--public-paper)); color: rgb(var(--public-ink)); font-family: var(--font-body), sans-serif; @apply antialiased; font-size: var(--font-size-base); }
+h1, h2, h3, h4, .font-display { font-family: var(--font-display), Georgia, serif; }
 .dark {
+  color-scheme: dark;
+  --public-paper: 2 6 23;
+  --public-ink: 241 245 249;
+  --public-moss: 15 23 42;
+  --public-haze: 30 41 59;
+  --public-line: 51 65 85;
   --background: 2 6 23;
   --foreground: 241 245 249;
   --card: 15 23 42;
@@ -82,22 +101,32 @@ body { @apply bg-background text-foreground antialiased; font-size: 16px; }
 }
 
 @layer components {
-  .h-gold-1 { font-size: 39px; line-height: 1.2; font-weight: 800; }
-  .h-gold-2 { font-size: 31px; line-height: 1.25; font-weight: 700; }
-  .h-gold-3 { font-size: 25px; font-weight: 700; }
+  .h-gold-1 { font-family: var(--font-display), Georgia, serif; font-size: clamp(2.618rem, 5.5vw, 4.236rem); line-height: 1.04; font-weight: 600; letter-spacing: -.035em; }
+  .h-gold-2 { font-family: var(--font-display), Georgia, serif; font-size: clamp(1.618rem, 3vw, 2.618rem); line-height: 1.12; font-weight: 600; letter-spacing: -.025em; }
+  .h-gold-3 { font-family: var(--font-display), Georgia, serif; font-size: clamp(1.15rem, 1.7vw, 1.618rem); line-height: 1.2; font-weight: 600; }
   .grad-text { background: linear-gradient(135deg, rgb(var(--brand-600)), rgb(var(--accent-500))); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .animate-list { animation: list-in .35s ease-out both; }
-  .spotlight-card { transition: border-color .2s ease, box-shadow .2s ease; }
-  .spotlight-card:hover { border-color: rgb(var(--brand-500) / .4); }
-  .skip-link { @apply fixed left-[13px] top-[13px] z-[100] -translate-y-20 rounded-[13px] bg-slate-900 px-[21px] py-[13px] font-semibold text-white transition-transform focus:translate-y-0; }
+  .animate-list { animation: list-in .55s cubic-bezier(.2,.7,.2,1) both; }
+  .spotlight-card { border-color: rgb(var(--public-line)); background: rgb(var(--card)); transition: border-color .3s ease, box-shadow .3s ease, transform .45s cubic-bezier(.2,.7,.2,1); }
+  .spotlight-card:hover { border-color: rgb(var(--brand-500) / .5); box-shadow: 0 22px 50px -34px rgb(var(--public-ink) / .38); transform: translateY(-4px); }
+  .public-shell { color: rgb(var(--public-ink)); }
+  .public-section { padding-block: clamp(3.25rem, 7vw, 6rem); }
+  .public-kicker { color: rgb(var(--brand-700)); font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+  .hero-depth { transform-style: preserve-3d; perspective: 1200px; box-shadow: var(--echo-shadow-lifted); }
+  .hero-placeholder { background: radial-gradient(ellipse at 65% 30%, var(--echo-accent-highlight) 0, transparent 40%), linear-gradient(145deg, var(--echo-accent-2), var(--echo-accent-7)); }
+  .hero-depth img { transform: translateZ(24px); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+  .hero-depth:hover img { transform: translateZ(46px) scale(1.025); }
+  .story-rule { background: linear-gradient(90deg, rgb(var(--brand-600)), rgb(var(--brand-600) / .12) 70%, transparent); height: 1px; }
+  .skip-link { @apply fixed left-[13px] top-[13px] z-[100] -translate-y-20 rounded-[13px] px-[21px] py-[13px] font-semibold transition-transform focus:translate-y-0; background: var(--echo-text); color: var(--echo-paper-stock); }
 }
+.dark .public-kicker { color: var(--echo-accent-highlight); }
 
 @keyframes list-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .dark .text-slate-400, .dark .text-slate-500, .dark .text-slate-600, .dark .text-slate-700 { color: #cbd5e1 !important; }
 :focus-visible { outline: 3px solid rgb(var(--brand-500)); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+@media (hover: none) { .spotlight-card:hover { transform: none; } }
 @layer base {
   * {
-    @apply border-border;
+    border-color: rgb(var(--border));
   }
 }

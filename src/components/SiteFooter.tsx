@@ -6,26 +6,26 @@ const services = [["SPMB Online", "/spmb"], ["E-Learning", "/e-learning"], ["Per
 
 export function SiteFooter({ identity }: { identity: SiteIdentity }) {
   const socials = [["Facebook", identity.facebook], ["Instagram", identity.instagram], ["YouTube", identity.youtube]].filter((item) => item[1]);
-  const linkList = (links: string[][]) => links.map(([label, href]) => <Link key={href} href={href} className="block w-fit text-slate-600 underline-offset-4 hover:text-slate-900 hover:underline dark:text-slate-300 dark:hover:text-white">{label}</Link>);
+  const linkList = (links: string[][]) => links.map(([label, href]) => <Link key={href} href={href} className="block min-h-11 w-fit py-2 text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline">{label}</Link>);
 
-  return <footer className="mt-[34px] border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-    <div className="mx-auto grid max-w-6xl gap-[34px] px-[21px] py-[34px] sm:grid-cols-2 lg:grid-cols-4">
+  return <footer className="mt-0 border-t border-white/10 bg-[rgb(var(--public-night))] text-white">
+    <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-4 lg:px-12">
       <section>
-        {identity.logo && <img src={identity.logo} alt="" className="mb-[13px] h-12 w-12 object-contain" />}
-        <h2 className="text-[18px] font-bold">{identity.siteTitle}</h2>
-        <p className="mt-[8px] text-[14px] text-slate-600 dark:text-slate-300">{identity.description}</p>
-        {socials.length > 0 && <nav aria-label="Media sosial" className="mt-[13px] flex flex-wrap gap-[13px]">{socials.map(([name, url]) => <a key={name} href={url!} target="_blank" rel="noopener noreferrer" className="text-[14px] underline">{name}</a>)}</nav>}
+        {identity.logo && <img src={identity.logo} alt="" className="mb-3 h-12 w-12 object-contain" />}
+        <h2 className="font-display text-xl font-semibold">{identity.siteTitle}</h2>
+        <p className="mt-3 text-sm leading-6 text-white/65">{identity.description}</p>
+        {socials.length > 0 && <nav aria-label="Media sosial" className="mt-4 flex flex-wrap gap-4">{socials.map(([name, url]) => <a key={name} href={url!} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-sm underline underline-offset-4">{name}</a>)}</nav>}
       </section>
-      <nav aria-label="Jelajahi halaman" className="space-y-[8px] text-[14px]"><h2 className="mb-[13px] text-[16px] font-semibold">Jelajahi</h2>{linkList(explore)}</nav>
-      <nav aria-label="Layanan sekolah" className="space-y-[8px] text-[14px]"><h2 className="mb-[13px] text-[16px] font-semibold">Layanan</h2>{linkList(services)}</nav>
-      <section className="space-y-[8px] text-[14px]">
-        <h2 className="mb-[13px] text-[16px] font-semibold">Kontak</h2>
-        {identity.address && <p>{identity.address}</p>}
-        {identity.phone && <p><a href={`tel:${identity.phone}`} className="underline">{identity.phone}</a></p>}
-        {identity.email && <p><a href={`mailto:${identity.email}`} className="underline">{identity.email}</a></p>}
-        {identity.mapUrl && <a href={identity.mapUrl} target="_blank" rel="noopener noreferrer" className="inline-block underline">Lihat lokasi sekolah</a>}
-        {!identity.address && !identity.phone && !identity.email && <p className="text-slate-600 dark:text-slate-300">Kirim pesan melalui formulir pengaduan sekolah.</p>}
-        <p className="pt-[13px] text-[13px] text-slate-500">© {new Date().getFullYear()} {identity.siteTitle}</p>
+      <nav aria-label="Jelajahi halaman" className="space-y-1 text-sm"><h2 className="mb-2 font-display text-lg font-semibold">Jelajahi</h2>{linkList(explore)}</nav>
+      <nav aria-label="Layanan sekolah" className="space-y-1 text-sm"><h2 className="mb-2 font-display text-lg font-semibold">Layanan</h2>{linkList(services)}</nav>
+      <section className="space-y-2 text-sm text-white/70">
+        <h2 className="mb-2 font-display text-lg font-semibold text-white">Kontak</h2>
+        {identity.address && <p className="leading-6">{identity.address}</p>}
+        {identity.phone && <p><a href={`tel:${identity.phone}`} className="inline-flex min-h-11 items-center underline underline-offset-4">{identity.phone}</a></p>}
+        {identity.email && <p><a href={`mailto:${identity.email}`} className="inline-flex min-h-11 items-center underline underline-offset-4">{identity.email}</a></p>}
+        {identity.mapUrl && <a href={identity.mapUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center underline underline-offset-4">Lihat lokasi sekolah</a>}
+        {!identity.address && !identity.phone && !identity.email && <p>Kirim pesan melalui formulir pengaduan sekolah.</p>}
+        <p className="pt-3 text-xs text-white/65">&copy; {new Date().getFullYear()} {identity.siteTitle}</p>
       </section>
     </div>
   </footer>;
