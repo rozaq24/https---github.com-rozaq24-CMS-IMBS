@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { SiteIdentity } from "@/lib/settings";
 
-const explore = [["Profil", "/profil"], ["Guru", "/guru"], ["Program", "/program"], ["Prestasi", "/prestasi"], ["Berita", "/berita"], ["Agenda", "/agenda"], ["Galeri", "/galeri"], ["Unduhan", "/download"], ["FAQ", "/faq"]];
+const explore = [["Profil", "/profil"], ["Sambutan", "/sambutan"], ["Guru & Tendik", "/guru"], ["Program", "/program"], ["Ekstrakurikuler", "/ekstrakurikuler"], ["Prestasi", "/prestasi"], ["Berita", "/berita"], ["Agenda", "/agenda"], ["Galeri", "/galeri"], ["Unduhan", "/download"], ["FAQ", "/faq"]];
 const services = [["SPMB Online", "/spmb"], ["E-Learning", "/e-learning"], ["Perpustakaan", "/perpustakaan"], ["Pengaduan", "/pengaduan"]];
 
 export function SiteFooter({ identity }: { identity: SiteIdentity }) {

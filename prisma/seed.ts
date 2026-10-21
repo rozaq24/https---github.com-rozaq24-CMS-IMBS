@@ -1,5 +1,6 @@
 import { db } from "../src/lib/db";
 import { FAQ } from "../src/lib/faq";
+import { DEFAULT_PUBLIC_MENU } from "../src/lib/menus";
 import bcrypt from "bcryptjs";
 
 async function main() {
@@ -55,12 +56,9 @@ async function main() {
   if (!await db.photo.findFirst({ where: { albumId: albums[1].id } })) await db.photo.create({ data: { albumId: albums[1].id, url: "https://picsum.photos/seed/imbs-literasi/960/640", caption: "Foto demo literasi — ganti dengan dokumentasi sekolah." } });
   await db.sPMBPeriod.upsert({ where: { id: "demo-spmb-2026" }, update: {}, create: { id: "demo-spmb-2026", name: "Periode Demo", year: "2026", quota: 100, openAt: new Date("2026-01-01T00:00:00.000Z"), closeAt: new Date("2026-12-31T23:59:59.000Z"), terms: "Periode demo. Perbarui persyaratan resmi sebelum digunakan.", active: true } });
 
-  const menus = [
-    ["menu-profil", "Profil", "#", null, 0], ["menu-tentang", "Tentang", "#", "menu-profil", 0], ["menu-visi", "Visi-Misi", "/visi-misi", "menu-tentang", 0],
-    ["menu-sejarah", "Sejarah", "/sejarah", "menu-tentang", 1], ["menu-guru", "Guru", "/guru", "menu-profil", 1], ["menu-berita", "Berita", "/berita", null, 1],
-    ["menu-program", "Program", "/program", null, 2], ["menu-spmb", "SPMB", "/spmb", null, 3],
-  ] as const;
-  for (const [id, label, href, parentId, order] of menus) await db.menuItem.upsert({ where: { id }, update: {}, create: { id, label, href, parentId, order, visible: true } });
+  for (const { id, label, href, parentId, order, visible, target, pageSlug } of DEFAULT_PUBLIC_MENU) {
+    await db.menuItem.upsert({ where: { id }, update: {}, create: { id, label, href, parentId, order, visible, target, pageSlug } });
+  }
   console.log(`Seed demo selesai: ${users.length} akun, ${posts.length} berita, ${albums.length} album, halaman profil, data akademik, SPMB, dan FAQ. Login demo: ${users.map(([email]) => email).join(", ")} / ImbsDemo!2026`);
 }
 

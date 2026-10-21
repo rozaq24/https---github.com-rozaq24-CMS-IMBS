@@ -14,7 +14,7 @@ blueprint_ref:
 agent_suitability: [antigravity, copilot, codex]
 depends_on: [T-003, T-004, T-005, T-006, T-008, T-010]
 estimated: L
-branch: feat/T-012-halaman-publik
+branch: fix/T-012-public-navigation
 ---
 
 # T-012 — Halaman Publik: Profil/Agenda/Download/FAQ/Pengaduan/E-Learning/Perpus
@@ -47,6 +47,7 @@ Merakit seluruh halaman publik sesuai Blueprint Frontend #1–#5 dengan UI Golde
 3. Kirim pengaduan dari /pengaduan → cek inbox.
 
 ## Log Agen
+- [2026-10-21] Codex - DONE: menyelaraskan navigasi publik dengan modul yang tersedia untuk pengunjung: Profil (visi-misi, sejarah, sambutan, guru), Akademik (ekstrakurikuler, prestasi), Informasi (berita, agenda, galeri, unduhan, FAQ), dan Layanan (SPMB, e-learning, perpustakaan, pengaduan). Halaman CMS dengan opsi tampil di menu ikut ditemukan otomatis; menu buatan admin dipertahankan. Data siswa/kelas, akun, moderasi, inbox internal, dan log tetap privat. Footer dilengkapi sambutan dan ekstrakurikuler; navigasi responsif disesuaikan agar muat di layar tablet. Verifikasi: `git diff --check` bersih; `NEXT_DIST_DIR=.next-admin-check npx next build` lolos dan memproses semua 78 halaman.
 - [2026-10-21] Codex - DONE: membandingkan homepage dengan cms.sekolahku.web.id; memperbarui hero, sambutan, statistik, program, guru, kartu berita, footer, dan navigasi responsif. Uiverse dipakai sebagai rujukan interaksi tombol/kartu CSS ringan tanpa dependency. `npx tsc --noEmit` dan `NEXT_DIST_DIR=.next-t012 npx next build` lolos; browser production 1440px/390px tanpa horizontal overflow, route /profil /berita /spmb HTTP 200, mobile menu menampilkan CTA SPMB. Lighthouse production (Performance/Accessibility/SEO): / 87/100/100, /profil 87/100/100, /berita 92/100/100, /spmb 98/100/100, /faq 96/100/100. Foto kepala sekolah dan kontak belum tersedia dalam identitas CMS sehingga UI tetap memakai monogram dan bar kontak hanya muncul bila datanya diisi.
 - [2026-10-21] Codex - REVIEW: build Next.js production terisolasi (`NEXT_DIST_DIR=.next-t012 npx next build`) lolos; route table memuat seluruh route publik tanpa warning route. `npm run build` gagal di `prisma generate` dengan EPERM saat rename query engine DLL yang sedang dipakai dua server `next dev` aktif. Lighthouse production masih belum dapat diverifikasi: server yang tersedia hanya dev, sedangkan instruksi workspace melarang memulai server. Acceptance Lighthouse tetap terbuka; task dipertahankan REVIEW.
 - [2026-10-20] Codex - DOING: mulai setelah T-011; meninjau blueprint, acceptance criteria, dan halaman publik yang sudah tersedia.
