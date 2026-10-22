@@ -2,6 +2,14 @@
   "lockVersion": 1,
   "core": "0.3.0",
   "items": {
+    "accordion": {
+      "version": "0.3.3",
+      "files": {
+        "accordion/accordion.css": "02138aceec7f1745e497dfe865fb5687254fcc27d344c2c03c1934e9d5f02799",
+        "accordion/accordion.tsx": "72e84af2f93638d46ca36c3788b17357953e028823bc826d4537580a2fb58dcc",
+        "accordion/index.ts": "4fa3d77744807e7a3b3e0ce3c57b7fd8781bd92e8f13f8cd37c6bd0340120c6f"
+      }
+    },
     "checkbox": {
       "version": "0.3.0",
       "files": {
@@ -27,12 +35,36 @@
         "hardware-button/index.ts": "e4a7fc3afcad001f1bb7a58cbcb5cc5425558faa62ccad07bdab510e1d20121f"
       }
     },
+    "lcd-chip": {
+      "version": "0.3.3",
+      "files": {
+        "lcd-chip/lcd-chip.css": "f42cde45dbaf4e3e1f10eaf1379a31921e2f469f28152b9fc02f64a2de2722bf",
+        "lcd-chip/lcd-chip.tsx": "10014cf89384a260dbd39849898138e65ea20529f17abf869503684c533b9d77",
+        "lcd-chip/index.ts": "b3fa290d06a85722974045cd73f914ac5fd065c18bd3e4e27336347ceaf15f76"
+      }
+    },
+    "roll": {
+      "version": "0.3.0",
+      "files": {
+        "roll/drum.ts": "204138214cec4916c101caa783bc3362287109e73d326f4fcb2a0310b4c9d0c2",
+        "roll/roll.ts": "5502f8f6746b3be07fb2ef343bbe1f8216e8165c3a16fb34692b51377730291b",
+        "roll/index.ts": "338959c537daea6be942a10020daaeb3e680794d577c3ac02d41675c7256f301"
+      }
+    },
     "segmented": {
       "version": "0.3.3",
       "files": {
         "segmented/segmented.css": "50db5a43b0aca88eed0d03dbf895b618c6e7abc2a07256d2e8b8b9233b1fe66c",
         "segmented/segmented.tsx": "0cf4dbf61a7331fee7c79a65ea35b8526c37f18aaabf95e7ca1d9bfe60665c5e",
         "segmented/index.ts": "7aa5c4984d65ee82359f7e00847b9fdcf90d08415c3ab1919eb483086fc7d4f5"
+      }
+    },
+    "select": {
+      "version": "0.3.3",
+      "files": {
+        "select/select.css": "15e401c9deb2e725bc8bb5c64e492265e0c48e8cafbc20753ab4c6711116f714",
+        "select/select.tsx": "48c2f4401cbed94605d436522bcf861bb0fa0d7cd0044ea97277c84edaaa6a44",
+        "select/index.ts": "a90e4d998a17a3618eb3ba39faf0a3df9544045ef501fe66b7c8944bd3a9a080"
       }
     },
     "size": {

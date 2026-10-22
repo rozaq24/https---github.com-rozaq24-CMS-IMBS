@@ -53,14 +53,26 @@ export function buildMenuTree(items: MenuNode[], parentId: string | null = null)
   return items.filter((item) => item.parentId === parentId && item.visible).sort((a, b) => a.order - b.order).map((item) => ({ ...item, children: buildMenuTree(items, item.id) }));
 }
 
+export function customPageMenuHref(slug: string, href: string) {
+  const hashIndex = href.indexOf("#");
+  if (hashIndex < 0) return `/${slug}`;
+  const anchor = href.slice(hashIndex + 1);
+  if (!/^[a-z0-9][a-z0-9-]{0,39}$/i.test(anchor)) return null;
+  return `/${slug}#${anchor}`;
+}
+
 export function buildPublicMenu(items: MenuNode[], pages: { slug: string; title: string }[]) {
   const defaults = new Set(DEFAULT_PUBLIC_MENU.map((item) => item.id));
   const menuItems = isLegacySeedMenu(items)
     ? [...DEFAULT_PUBLIC_MENU, ...items.filter((item) => !defaults.has(item.id))]
     : items;
   const tree = buildMenuTree(menuItems);
-  const existingHrefs = new Set(menuItems.filter((item) => item.visible).map((item) => item.href));
-  const pageLinks = pages.filter((page) => !existingHrefs.has(`/${page.slug}`));
+  const existingPageSlugs = new Set(menuItems.filter((item) => item.visible).flatMap((item) => {
+    if (item.pageSlug) return [item.pageSlug];
+    const match = item.href.match(/^\/([^/#?]+)(?:[?#].*)?$/);
+    return match ? [match[1]] : [];
+  }));
+  const pageLinks = pages.filter((page) => !existingPageSlugs.has(page.slug));
 
   if (pageLinks.length) {
     tree.push({

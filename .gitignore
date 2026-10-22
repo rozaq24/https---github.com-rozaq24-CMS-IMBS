@@ -5,6 +5,8 @@ node_modules/
 .next-build/
 .next-qa-verify/
 .next-ui-migration-verify/
+.next-t014-builder-check/
+.next-builder-layout-check/
 out/
 dist/
 *.db*

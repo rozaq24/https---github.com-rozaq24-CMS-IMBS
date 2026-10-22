@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { getClientIp, requireRole, writeLog } from "@/lib/auth-helpers";
 import { cleanHtml, slugify, uniqueSlug } from "@/lib/posts";
 import { pageSchema, RESERVED_SLUGS } from "@/lib/validators";
+import { parseBuilderData } from "@/app/admin/builder/builder-types";
 
 const PAGE_ROLES = ["SUPERADMIN", "OPERATOR_BERITA"];
 
@@ -28,6 +29,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Validasi gagal", issues: parsed.error.flatten() }, { status: 400 });
   }
   const v = parsed.data;
+  if (v.builderData && !parseBuilderData(v.builderData)) return NextResponse.json({ error: "Data IMBS Builder tidak valid" }, { status: 400 });
   const baseSlug = v.slug || slugify(v.title);
   if (RESERVED_SLUGS.includes(baseSlug)) {
     return NextResponse.json({ error: `Slug "${baseSlug}" dipakai sistem, pilih slug lain` }, { status: 400 });

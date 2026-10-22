@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { getClientIp, requireRole, writeLog } from "@/lib/auth-helpers";
 import { pageSchema } from "@/lib/validators";
 import { cleanHtml } from "@/lib/posts";
+import { parseBuilderData } from "@/app/admin/builder/builder-types";
 
 const PAGE_ROLES = ["SUPERADMIN", "OPERATOR_BERITA"];
 
@@ -27,6 +28,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   const target = await db.customPage.findUnique({ where: { id: params.id } });
   if (!target) return NextResponse.json({ error: "Halaman tidak ditemukan" }, { status: 404 });
   const v = parsed.data;
+  if (v.builderData && !parseBuilderData(v.builderData)) return NextResponse.json({ error: "Data IMBS Builder tidak valid" }, { status: 400 });
   let slug = target.slug;
   if (v.slug && v.slug !== target.slug) {
     const used = await db.customPage.findUnique({ where: { slug: v.slug } });
