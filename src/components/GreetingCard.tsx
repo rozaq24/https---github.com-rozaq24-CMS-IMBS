@@ -1,29 +1,35 @@
 import Link from "next/link";
+import { ArrowUpRight, Quote } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PublicImage } from "@/components/PublicImage";
 
 export type Greeting = { title: string; body: string; principalName: string; photo: string | null; active: boolean };
 
-// Kartu sambutan kepsek — dipakai homepage, /profil, /sambutan
 export function GreetingCard({ greeting, compact = false }: { greeting: Greeting | null; compact?: boolean }) {
   if (!greeting || !greeting.active) return null;
-  const paragraphs = greeting.body.split(/\n{2,}|\r\n{2,}/).map((p) => p.trim()).filter(Boolean);
+  const paragraphs = greeting.body.split(/\n{2,}|\r\n{2,}/).map((paragraph) => paragraph.trim()).filter(Boolean);
   return (
-    <Card className={`spotlight-card flex gap-[21px] flex-col items-start text-slate-900 dark:text-slate-100 ${compact ? "md:flex-col" : "md:flex-row"}`} as="section">
-      {greeting.photo ? (
-        <img src={greeting.photo} alt={greeting.principalName} className={`rounded-[21px] w-full object-cover ${compact ? "h-[300px]" : "h-[260px] md:w-[220px]"}`} />
-      ) : (
-        <div className={`rounded-[21px] w-full flex items-center justify-center text-[64px] font-extrabold text-white ${compact ? "h-[300px]" : "h-[260px] md:w-[220px]"}`} style={{ background: "linear-gradient(135deg, rgb(var(--brand-600)), rgb(var(--accent-500)))" }}>
-          {greeting.principalName.charAt(0)}
+    <Card className={`greeting-story ${compact ? "greeting-story--compact" : ""}`} as="section">
+      <div className="greeting-story__visual">
+        {greeting.photo ? (
+          <PublicImage src={greeting.photo} alt={greeting.principalName} fallbackLabel={greeting.principalName} className="greeting-story__image" />
+        ) : (
+          <div className="greeting-brand-placeholder greeting-story__image">
+            <img src="/brand/imbs-logo.png" alt="" aria-hidden="true" />
+            <span>International Muhammadiyah Boarding School</span>
+          </div>
+        )}
+        <span className="greeting-story__image-note">IMBS · {greeting.title}</span>
+      </div>
+      <div className="greeting-story__copy">
+        <p className="public-kicker">{greeting.title}</p>
+        <h2 className="font-display">{greeting.principalName}</h2>
+        <Quote aria-hidden="true" className="greeting-story__quote-mark" />
+        <div className="greeting-story__body">
+          {(compact ? paragraphs.slice(0, 1) : paragraphs).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         </div>
-      )}
-      <div className="flex-1">
-        <p className="text-[13px] uppercase tracking-widest text-slate-500">{greeting.title}</p>
-        <h2 className="h-gold-2 mt-[8px]">{greeting.principalName}</h2>
-        {(compact ? paragraphs.slice(0, 1) : paragraphs).map((p, i) => (
-          <p key={i} className="mt-[13px] text-[16px] text-slate-600">{p}</p>
-        ))}
-        {compact && <Button asChild variant="outline"><Link href="/sambutan" className="!py-[8px] mt-[13px] inline-block">Baca Selengkapnya</Link></Button>}
+        {compact && <Button asChild variant="outline"><Link href="/sambutan">Baca sambutan lengkap <ArrowUpRight aria-hidden="true" data-icon="inline-end" /></Link></Button>}
       </div>
     </Card>
   );

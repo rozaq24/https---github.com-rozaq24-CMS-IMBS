@@ -94,7 +94,7 @@ Raised parts catch light on their top edge and cast a shadow below; recessed par
 
 ## Components
 
-Installed here: hardware-button, size. `npx echo-ui-cli which` names the rest by job.
+Installed here: checkbox, field, hardware-button, segmented, size. `npx echo-ui-cli which` names the rest by job.
 
 ## Do's and Don'ts
 

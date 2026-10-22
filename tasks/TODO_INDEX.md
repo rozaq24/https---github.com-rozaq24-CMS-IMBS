@@ -34,6 +34,10 @@
 
 - [ ] **T-013 — Seed, QA, SEO, Aksesibilitas, Deploy** (`tasks/T-013-go-live.md`) — REVIEW
 
+## Fase 6 — Builder
+
+- [ ] **T-014 — IMBS Builder Halaman Statis** (`tasks/T-014-imbs-builder.md`) — STATUS: DOING
+
 ## Cara Memakai Index Ini (untuk semua agent)
 
 1. Pilih 1 task TODO dengan fase terkecil + P0 dulu.

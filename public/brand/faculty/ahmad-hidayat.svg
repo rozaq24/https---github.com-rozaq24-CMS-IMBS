@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 760" fill="none">
+  <defs><linearGradient id="bg" x1="40" y1="20" x2="610" y2="760" gradientUnits="userSpaceOnUse"><stop stop-color="#D6D7F4"/><stop offset="1" stop-color="#9DD9C5"/></linearGradient><linearGradient id="shirt" x1="175" y1="460" x2="450" y2="760" gradientUnits="userSpaceOnUse"><stop stop-color="#24518B"/><stop offset="1" stop-color="#123447"/></linearGradient></defs>
+  <path fill="url(#bg)" d="M0 0h640v760H0z"/><circle cx="479" cy="168" r="126" fill="#F7E7A1" fill-opacity=".68"/><path d="M0 604c107-105 210-160 320-160s213 55 320 160v156H0V604Z" fill="#F4F0E5" fill-opacity=".44"/>
+  <path d="M93 760c8-147 83-243 227-243s219 96 227 243H93Z" fill="url(#shirt)"/><path d="m264 506 56 64 56-64 34 37-46 217H288l-46-217 22-37Z" fill="#F4D856"/>
+  <path d="M257 240c0-77 28-128 63-128s63 51 63 128v151c0 80-37 131-63 131s-63-51-63-131V240Z" fill="#C98762"/><path d="M241 251c-12-96 13-165 79-165 63 0 87 55 82 137-22-2-43-21-57-45-22 31-57 51-104 56Z" fill="#202B39"/><path d="M249 261c-30-17-40 17-23 47 9 16 21 21 32 20m127-67c30-17 40 17 23 47-9 16-21 21-32 20" fill="#C98762"/>
+  <path d="M279 292h17m49 0h17" stroke="#252D37" stroke-width="8" stroke-linecap="round"/><path d="M297 345c14 11 32 11 46 0" stroke="#773D3E" stroke-width="7" stroke-linecap="round"/><path d="M104 630c49-60 100-91 152-96m228 0c52 5 103 36 152 96" stroke="#F4D856" stroke-opacity=".58" stroke-width="3"/>
+</svg>

@@ -11,7 +11,7 @@ const Card = React.forwardRef<HTMLElement, CardProps>(
   ({ as: Component = "div", asChild = false, className, ...props }, ref) =>
     React.createElement(asChild ? Slot : Component, {
       ref,
-      className: cn("rounded-xl border bg-card p-5 text-card-foreground shadow-sm", className),
+      className: cn("public-card-surface rounded-xl border bg-card p-5 text-card-foreground shadow-sm", asChild && "block", className),
       ...props,
     }),
 );

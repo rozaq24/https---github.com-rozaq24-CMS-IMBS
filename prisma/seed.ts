@@ -2,6 +2,8 @@ import { db } from "../src/lib/db";
 import { FAQ } from "../src/lib/faq";
 import { DEFAULT_PUBLIC_MENU } from "../src/lib/menus";
 import bcrypt from "bcryptjs";
+import { stat } from "fs/promises";
+import { join } from "path";
 
 async function main() {
   const passwordHash = await bcrypt.hash("ImbsDemo!2026", 10);
@@ -22,16 +24,29 @@ async function main() {
   ];
   for (const [key, value] of settings) await db.siteSetting.upsert({ where: { key }, update: { value }, create: { key, value } });
 
-  await db.greeting.upsert({ where: { id: 1 }, update: {}, create: { id: 1, title: "Sambutan Kepala Sekolah", body: "Selamat datang di website resmi sekolah IMBS. Mari belajar, berkarya, dan tumbuh bersama.", principalName: "Kepala Sekolah" } });
+  const demoGreeting = "Selamat datang di ruang digital IMBS. Di sini, keluarga sekolah dapat mengenal perjalanan belajar, karya, dan kegiatan murid.\n\nKami percaya pendidikan tumbuh melalui ilmu, adab, rasa ingin tahu, dan kepedulian. Setiap hari adalah kesempatan untuk mencoba, bertanya, lalu belajar dari prosesnya.\n\nMari berjalan bersama membangun lingkungan yang mendukung setiap murid bertumbuh. Contoh sambutan ini disediakan untuk meninjau tampilan dan perlu disesuaikan dengan pesan resmi sekolah.";
+  await db.greeting.upsert({ where: { id: 1 }, update: {}, create: { id: 1, title: "Sambutan Kepala Sekolah", body: demoGreeting, principalName: "Kepala Sekolah" } });
+  const greeting = await db.greeting.findUnique({ where: { id: 1 } });
+  if (greeting?.body === "Selamat datang di website resmi sekolah IMBS. Mari belajar, berkarya, dan tumbuh bersama." || greeting?.body === "Selamat datang.") {
+    await db.greeting.update({ where: { id: 1 }, data: { body: demoGreeting } });
+  }
   const pages = [
     ["visi-misi", "Visi dan Misi", "<h2>Visi</h2><p>Mewujudkan peserta didik yang berilmu, berkarakter, dan siap berkontribusi.</p><h2>Misi</h2><p>Menyelenggarakan pembelajaran yang aman, terarah, dan mendorong potensi setiap murid.</p>"],
-    ["sejarah", "Sejarah Sekolah", "<p>Halaman demo ini menunggu riwayat resmi sekolah dari pengelola. Ganti konten contoh melalui menu halaman di admin.</p>"],
+    ["sejarah", "Sejarah Sekolah", "<p><strong>Materi demo untuk evaluasi desain.</strong> Kronologi berikut adalah contoh struktur cerita, bukan catatan sejarah resmi IMBS.</p><h2>Berangkat dari cita-cita pendidikan</h2><p>Sebuah sekolah tumbuh dari harapan keluarga dan pendidik: menghadirkan ruang belajar yang merawat ilmu, adab, dan rasa ingin tahu. Bab pembuka ini dapat diisi dengan kisah pendirian serta nilai yang menjadi pijakan sekolah.</p><h2>Belajar bersama masyarakat</h2><p>Perjalanan sekolah juga dibentuk oleh murid, guru, keluarga, dan lingkungan sekitar. Tambahkan peristiwa penting, perubahan program, serta cerita kebersamaan yang telah diverifikasi.</p><h2>Melangkah ke masa depan</h2><p>Gunakan bagian ini untuk menjelaskan arah pengembangan sekolah dan cita-cita yang ingin dicapai bersama. Lengkapi dengan tahun, nama, dan dokumentasi resmi sebelum dipublikasikan.</p>"],
     ["kontak", "Kontak", "<p>Hubungi sekolah melalui informasi kontak resmi pada footer atau kirim pesan melalui formulir pengaduan.</p>"],
-    ["budaya-belajar", "Budaya Belajar", "<p>Contoh halaman untuk meninjau informasi kegiatan belajar, kebiasaan membaca, dan kerja kelompok. Ganti seluruh isi dengan kebijakan resmi sekolah sebelum situs dipublikasikan.</p><h2>Belajar bersama</h2><p>Murid berlatih menyampaikan gagasan, bertanya, dan menyelesaikan tugas secara bertahap. Guru mendampingi proses belajar sesuai kebutuhan kelas.</p><h2>Ruang yang mendukung</h2><p>Perpustakaan, ruang kelas, dan kegiatan bersama menjadi contoh ruang belajar yang dapat diperkenalkan pada halaman ini.</p>"],
-    ["fasilitas-sekolah", "Fasilitas Sekolah", "<p>Halaman contoh fasilitas sekolah untuk kebutuhan review tampilan. Sesuaikan nama ruang, foto, dan jam penggunaan berdasarkan data resmi.</p><h2>Ruang belajar</h2><p>Informasi ruang kelas, laboratorium, perpustakaan, dan fasilitas pendukung dapat dijelaskan di sini.</p><h2>Layanan murid</h2><p>Tambahkan petunjuk akses, jadwal layanan, serta narahubung yang sudah diverifikasi oleh pengelola.</p>"],
+    ["budaya-belajar", "Budaya Belajar", "<p><strong>Contoh konten:</strong> kebiasaan belajar yang hidup hadir lewat rasa ingin tahu, percakapan yang saling menghargai, dan keberanian mencoba.</p><h2>Membaca dengan rasa ingin tahu</h2><p>Murid memilih bacaan, mengajukan pertanyaan, dan berbagi bagian yang mengubah cara pandangnya.</p><h2>Membuat gagasan menjadi karya</h2><p>Diskusi, eksperimen, dan proyek kelompok membantu murid menguji ide serta menjelaskan prosesnya.</p><h2>Belajar dari refleksi</h2><p>Di akhir kegiatan, murid meninjau hal yang berhasil dan menentukan langkah berikutnya. Sesuaikan contoh ini dengan praktik belajar resmi sekolah.</p>"],
+    ["fasilitas-sekolah", "Fasilitas Sekolah", "<p><strong>Data demo untuk review:</strong> susunan ruang berikut menunjukkan cara fasilitas dapat diperkenalkan. Nama, foto, akses, dan jadwal wajib diperiksa oleh pengelola sekolah.</p><h2>Perpustakaan</h2><p>Ruang membaca dan mencari referensi untuk mendukung rasa ingin tahu murid.</p><h2>Ruang belajar dan laboratorium</h2><p>Tempat untuk berdiskusi, mengerjakan proyek, dan mengamati konsep secara langsung.</p><h2>Ruang bersama</h2><p>Area kegiatan untuk presentasi, latihan, dan pertemuan warga sekolah. Tambahkan petunjuk akses dan jam penggunaan yang sudah dikonfirmasi.</p>"],
     ["layanan-murid", "Layanan Murid", "<p>Ringkasan contoh layanan yang membantu murid dan keluarga menemukan informasi sekolah.</p><ul><li>Informasi kegiatan dan agenda sekolah.</li><li>Pusat unduhan formulir dan dokumen.</li><li>Formulir pesan untuk pertanyaan atau masukan.</li></ul><p>Konten ini adalah data demo dan perlu ditinjau sebelum digunakan sebagai informasi resmi.</p>"],
   ] as const;
-  for (const [slug, title, content] of pages) await db.customPage.upsert({ where: { slug }, update: {}, create: { slug, title, content, showInMenu: true } });
+  const previousDemoCopy: Record<string, string> = {
+    sejarah: "<p>Halaman demo ini menunggu riwayat resmi sekolah dari pengelola. Ganti konten contoh melalui menu halaman di admin.</p>",
+    "budaya-belajar": "<p>Contoh halaman untuk meninjau informasi kegiatan belajar, kebiasaan membaca, dan kerja kelompok. Ganti seluruh isi dengan kebijakan resmi sekolah sebelum situs dipublikasikan.</p><h2>Belajar bersama</h2><p>Murid berlatih menyampaikan gagasan, bertanya, dan menyelesaikan tugas secara bertahap. Guru mendampingi proses belajar sesuai kebutuhan kelas.</p><h2>Ruang yang mendukung</h2><p>Perpustakaan, ruang kelas, dan kegiatan bersama menjadi contoh ruang belajar yang dapat diperkenalkan pada halaman ini.</p>",
+    "fasilitas-sekolah": "<p>Halaman contoh fasilitas sekolah untuk kebutuhan review tampilan. Sesuaikan nama ruang, foto, dan jam penggunaan berdasarkan data resmi.</p><h2>Ruang belajar</h2><p>Informasi ruang kelas, laboratorium, perpustakaan, dan fasilitas pendukung dapat dijelaskan di sini.</p><h2>Layanan murid</h2><p>Tambahkan petunjuk akses, jadwal layanan, serta narahubung yang sudah diverifikasi oleh pengelola.</p>",
+  };
+  for (const [slug, title, content] of pages) {
+    const page = await db.customPage.upsert({ where: { slug }, update: {}, create: { slug, title, content, showInMenu: true } });
+    if (previousDemoCopy[slug] === page.content) await db.customPage.update({ where: { id: page.id }, data: { content } });
+  }
 
   const posts = [
     ["kegiatan-belajar", "Kegiatan Belajar di Sekolah", "Berita", "Murid mengikuti kegiatan pembelajaran dan diskusi di kelas."],
@@ -47,6 +62,21 @@ async function main() {
     ["informasi-spmb-2027", "Informasi Penerimaan Murid Baru", "Pengumuman", "Informasi penerimaan untuk tahun ajaran berikutnya masih berupa contoh. Periksa jadwal, persyaratan, dan kontak resmi sebelum mengumumkannya kepada calon keluarga."],
     ["agenda-kelas-terbuka", "Kelas Terbuka untuk Keluarga", "Agenda", "Contoh agenda pertemuan keluarga dan guru. Waktu dan lokasi final akan diumumkan oleh sekolah melalui kanal resminya."],
   ] as const;
+  const demoPostCovers = [
+    ["kegiatan-belajar", "photo-1509062522246-3755977927d7", "/brand/stories/ruang-belajar.svg"],
+    ["pengumuman-akademik", "photo-1523050854058-8df90110c9f1", "/brand/stories/karya-murid.svg"],
+    ["agenda-kegiatan", "photo-1505373877841-8d25f7d46678", "/brand/stories/kolaborasi.svg"],
+    ["karya-murid", "photo-1516321318423-f06f85e504b3", "/brand/stories/karya-murid.svg"],
+    ["kegiatan-literasi", "photo-1507842217343-583bb7270b66", "/brand/stories/perpustakaan.svg"],
+    ["informasi-layanan", "photo-1524178232363-1fb2b075b655", "/brand/stories/ruang-belajar.svg"],
+    ["belajar-bersama", "photo-1427504494785-3a9ca7044f45", "/brand/stories/kolaborasi.svg"],
+    ["kabar-sekolah", "photo-1523240795612-9a054b0db644", "/brand/stories/ruang-belajar.svg"],
+    ["kelas-kolaboratif", "photo-1531482615713-2afd69097998", "/brand/stories/kolaborasi.svg"],
+    ["pekan-literasi", "photo-1516979187457-637abb4f9353", "/brand/stories/perpustakaan.svg"],
+    ["informasi-spmb-2027", "photo-1503676260728-1c00da094a0b", "/brand/stories/karya-murid.svg"],
+    ["agenda-kelas-terbuka", "photo-1517486808906-6ca8b3f04846", "/brand/stories/menulis.svg"],
+  ] as const;
+  const postCoverBySlug = new Map(demoPostCovers.map(([slug, , cover]) => [slug, cover]));
   for (let index = 0; index < posts.length; index++) {
     const [slug, title, type, excerpt] = posts[index];
     const publishedAt = index < 8
@@ -55,12 +85,29 @@ async function main() {
     await db.post.upsert({
       where: { slug },
       update: index >= 8 ? { publishedAt } : {},
-      create: { slug, title, type: type.toUpperCase(), excerpt, content: `<p>${excerpt}</p>`, cover: `https://picsum.photos/seed/imbs-${slug}/960/640`, status: "PUBLISHED", publishedAt, authorId: admin.id },
+      create: { slug, title, type: type.toUpperCase(), excerpt, content: `<p>${excerpt}</p>`, cover: postCoverBySlug.get(slug) || "/brand/stories/ruang-belajar.svg", status: "PUBLISHED", publishedAt, authorId: admin.id },
     });
   }
 
+  for (const [slug, oldImageId, cover] of demoPostCovers) {
+    const post = await db.post.findUnique({ where: { slug }, select: { id: true, cover: true } });
+    if (post?.cover?.startsWith("https://picsum.photos/seed/imbs-") || post?.cover?.startsWith(`https://images.unsplash.com/${oldImageId}?`)) {
+      await db.post.update({ where: { id: post.id }, data: { cover } });
+    }
+  }
+
+  const demoArticles = {
+    "kelas-kolaboratif": "<p>Contoh liputan untuk melihat bagaimana berita kegiatan dapat dibaca dengan nyaman di layar besar maupun ponsel. Murid membentuk kelompok kecil, memilih pertanyaan, lalu menyepakati cara untuk mencari jawabannya.</p><h2>Belajar dari proses</h2><p>Setiap kelompok membagi peran, membuat catatan, dan membandingkan temuan. Guru mendampingi diskusi agar setiap anggota mendapat ruang untuk menyampaikan gagasan.</p><h2>Membagikan hasil</h2><p>Di akhir kegiatan, murid mempresentasikan proses dan hasil kerja mereka. Naskah ini merupakan data demo untuk evaluasi desain dan perlu diganti dengan liputan resmi sekolah.</p>",
+    "pekan-literasi": "<p>Contoh artikel untuk meninjau tampilan berita panjang. Pekan Literasi mengajak murid menikmati buku, berdiskusi, dan merayakan karya tulis yang lahir dari rasa ingin tahu.</p><h2>Membaca dengan tujuan</h2><p>Murid memilih bacaan, menandai bagian yang menarik, lalu berbagi pertanyaan dengan teman. Percakapan sederhana membantu mereka melihat satu cerita dari sudut pandang berbeda.</p><h2>Karya tumbuh dari cerita</h2><p>Setelah membaca, murid mencoba menulis ulasan, puisi, atau cerita pendek. Naskah dan agenda ini bersifat demo; tanggal, tempat, serta dokumentasi harus disesuaikan dengan kegiatan resmi.</p>",
+    "informasi-spmb-2027": "<p>Contoh pengumuman untuk menampilkan materi informasi penerimaan. Informasi berikut belum menjadi ketentuan pendaftaran resmi.</p><h2>Yang perlu disiapkan</h2><p>Calon keluarga dapat menyiapkan identitas calon murid, dokumen pendukung, dan pertanyaan untuk tim penerimaan. Daftar dokumen dan jadwal final akan ditetapkan oleh sekolah.</p><h2>Ikuti kanal resmi</h2><p>Perbarui tanggal pendaftaran, biaya, kuota, persyaratan, dan kontak dari pengelola sebelum pengumuman ini dipublikasikan.</p>",
+  } as const;
+  for (const [slug, content] of Object.entries(demoArticles)) {
+    const post = await db.post.findUnique({ where: { slug }, select: { id: true, excerpt: true, content: true } });
+    if (post && post.content === `<p>${post.excerpt}</p>`) await db.post.update({ where: { id: post.id }, data: { content } });
+  }
+
   const major = await db.major.upsert({ where: { code: "DEMO" }, update: {}, create: { code: "DEMO", name: "Program Contoh", desc: "Ganti informasi demo ini dengan program resmi sekolah." } });
-  const teacher = await db.teacher.upsert({ where: { nip: "DEMO-GURU-001" }, update: {}, create: { nip: "DEMO-GURU-001", name: "Guru Demo", position: "Guru", education: "Data demo; perbarui melalui admin." } });
+  const teacher = await db.teacher.upsert({ where: { nip: "DEMO-GURU-001" }, update: { position: "Guru Pendamping", subjects: "Pendampingan belajar dan pengembangan karakter", education: "S.Pd. · data demo", experience: "Mendampingi proyek belajar lintas bidang · data demo", photo: "/brand/faculty/guru-demo.svg" }, create: { nip: "DEMO-GURU-001", name: "Guru Demo", position: "Guru Pendamping", subjects: "Pendampingan belajar dan pengembangan karakter", education: "S.Pd. · data demo", experience: "Mendampingi proyek belajar lintas bidang · data demo", photo: "/brand/faculty/guru-demo.svg" } });
   const classroom = await db.classRoom.upsert({ where: { name: "Kelas Contoh" }, update: {}, create: { name: "Kelas Contoh", year: "2026/2027", majorId: major.id, homeroomTeacherId: teacher.id } });
   const student = await db.student.upsert({ where: { nis: "DEMO-001" }, update: {}, create: { nis: "DEMO-001", name: "Murid Demo", gender: "L", classId: classroom.id, year: "2026/2027", status: "AKTIF" } });
   if (!await db.achievement.findFirst({ where: { title: "Prestasi Contoh" } })) await db.achievement.create({ data: { title: "Prestasi Contoh", level: "Sekolah", year: "2026", desc: "Ganti dengan prestasi resmi.", studentId: student.id } });
@@ -72,9 +119,9 @@ async function main() {
     db.major.upsert({ where: { code: "DEMO-ACADEMIC-02" }, update: {}, create: { code: "DEMO-ACADEMIC-02", name: "Bahasa dan Literasi", desc: "Contoh program bahasa dan literasi untuk review halaman publik." } }),
   ]);
   const demoTeachers = await Promise.all([
-    db.teacher.upsert({ where: { nip: "DEMO-GURU-002" }, update: {}, create: { nip: "DEMO-GURU-002", name: "Ahmad Hidayat", position: "Guru Sains", education: "Data profil contoh" } }),
-    db.teacher.upsert({ where: { nip: "DEMO-GURU-003" }, update: {}, create: { nip: "DEMO-GURU-003", name: "Siti Rahmah", position: "Guru Bahasa", education: "Data profil contoh" } }),
-    db.teacher.upsert({ where: { nip: "DEMO-GURU-004" }, update: {}, create: { nip: "DEMO-GURU-004", name: "Fadli Hakim", position: "Pembina Kegiatan", education: "Data profil contoh" } }),
+    db.teacher.upsert({ where: { nip: "DEMO-GURU-002" }, update: { position: "Guru Sains", subjects: "Eksperimen sains · literasi data", education: "S.Pd. Pendidikan IPA · data demo", experience: "Proyek laboratorium dan eksplorasi lingkungan · data demo", photo: "/brand/faculty/ahmad-hidayat.svg" }, create: { nip: "DEMO-GURU-002", name: "Ahmad Hidayat", position: "Guru Sains", subjects: "Eksperimen sains · literasi data", education: "S.Pd. Pendidikan IPA · data demo", experience: "Proyek laboratorium dan eksplorasi lingkungan · data demo", photo: "/brand/faculty/ahmad-hidayat.svg" } }),
+    db.teacher.upsert({ where: { nip: "DEMO-GURU-003" }, update: { position: "Guru Bahasa", subjects: "Bahasa Indonesia · literasi dan menulis", education: "S.Pd. Pendidikan Bahasa · data demo", experience: "Klub baca dan penerbitan karya murid · data demo", photo: "/brand/faculty/siti-rahmah.svg" }, create: { nip: "DEMO-GURU-003", name: "Siti Rahmah", position: "Guru Bahasa", subjects: "Bahasa Indonesia · literasi dan menulis", education: "S.Pd. Pendidikan Bahasa · data demo", experience: "Klub baca dan penerbitan karya murid · data demo", photo: "/brand/faculty/siti-rahmah.svg" } }),
+    db.teacher.upsert({ where: { nip: "DEMO-GURU-004" }, update: { position: "Pembina Kegiatan", subjects: "Kepemimpinan · kegiatan murid", education: "S.Pd. Pendidikan Olahraga · data demo", experience: "Pembinaan kegiatan dan kolaborasi murid · data demo", photo: "/brand/faculty/fadli-hakim.svg" }, create: { nip: "DEMO-GURU-004", name: "Fadli Hakim", position: "Pembina Kegiatan", subjects: "Kepemimpinan · kegiatan murid", education: "S.Pd. Pendidikan Olahraga · data demo", experience: "Pembinaan kegiatan dan kolaborasi murid · data demo", photo: "/brand/faculty/fadli-hakim.svg" } }),
   ]);
   const demoClasses = await Promise.all([
     db.classRoom.upsert({ where: { name: "Kelas 10 Demo" }, update: {}, create: { name: "Kelas 10 Demo", year: "2026/2027", majorId: demoMajors[0].id, homeroomTeacherId: demoTeachers[0].id } }),
@@ -103,17 +150,66 @@ async function main() {
     if (!await db.agenda.findFirst({ where: { title } })) await db.agenda.create({ data: { title, desc, location: "Sekolah (contoh)", startAt: new Date(date) } });
   }
 
+  const demoDownloads = [
+    { title: "Panduan Penerimaan Murid (Contoh)", category: "SPMB", fileName: "panduan-penerimaan-demo.pdf", desc: "Format contoh untuk meninjau Pusat Unduhan. Jadwal dan syarat bukan informasi resmi." },
+    { title: "Kalender Kegiatan (Contoh)", category: "Agenda", fileName: "kalender-kegiatan-demo.pdf", desc: "Contoh ringkasan kegiatan. Periksa halaman Agenda untuk jadwal yang diperbarui." },
+    { title: "Pengenalan Program (Contoh)", category: "Akademik", fileName: "lembar-pengenalan-program-demo.pdf", desc: "Contoh pengenalan program, perlu disesuaikan dengan data resmi sekolah." },
+  ] as const;
+  await db.downloadFile.deleteMany({ where: { fileUrl: { in: demoDownloads.map((file) => `/uploads/downloads/demo/${file.fileName}`) } } });
+  for (const file of demoDownloads) {
+    const fileUrl = `/brand/downloads/demo/${file.fileName}`;
+    const size = (await stat(join(process.cwd(), "public", fileUrl.slice(1)))).size;
+    const existing = await db.downloadFile.findFirst({ where: { fileUrl }, select: { id: true } });
+    const data = { title: file.title, category: file.category, desc: file.desc, fileUrl, size, public: true };
+    if (existing) await db.downloadFile.update({ where: { id: existing.id }, data });
+    else await db.downloadFile.create({ data });
+  }
+
+  const demoAlbums = [
+    {
+      title: "Ruang untuk Bertumbuh", oldTitle: "Kegiatan Contoh", category: "Akademik", photos: [
+        ["ruang-belajar.svg", "Belajar dimulai dari rasa ingin tahu."],
+        ["perpustakaan.svg", "Mencari jawaban di antara halaman buku."],
+        ["kolaborasi.svg", "Berbagi gagasan, menyusun pemahaman."],
+        ["karya-murid.svg", "Ruang kelas menjadi ruang bertanya."],
+      ],
+    },
+    {
+      title: "Mencoba dan Menemukan", oldTitle: "Literasi Contoh", category: "Eksplorasi", photos: [
+        ["laboratorium.svg", "Eksperimen kecil membuka pertanyaan baru."],
+        ["ruang-belajar.svg", "Belajar sains lewat pengamatan langsung."],
+        ["menulis.svg", "Mencatat proses sama pentingnya dengan hasil."],
+        ["karya-murid.svg", "Ide tumbuh saat dikerjakan bersama."],
+      ],
+    },
+    {
+      title: "Karya yang Dibuat Bersama", oldTitle: "Proyek Kelas Contoh", category: "Karya Murid", photos: [
+        ["kolaborasi.svg", "Setiap murid membawa sudut pandang."],
+        ["menulis.svg", "Dari catatan sederhana menjadi cerita."],
+        ["perpustakaan.svg", "Merawat kebiasaan membaca."],
+        ["karya-murid.svg", "Berani berbagi hasil dan proses."],
+      ],
+    },
+  ] as const;
   const albums = [];
-  for (const title of ["Kegiatan Contoh", "Literasi Contoh", "Proyek Kelas Contoh"]) albums.push(await db.album.findFirst({ where: { title } }) ?? await db.album.create({ data: { title, category: "Demo" } }));
-  if (!await db.photo.findFirst({ where: { albumId: albums[0].id } })) await db.photo.create({ data: { albumId: albums[0].id, url: "https://picsum.photos/seed/imbs-school/960/640", caption: "Foto demo — ganti dengan dokumentasi sekolah." } });
-  if (!await db.photo.findFirst({ where: { albumId: albums[1].id } })) await db.photo.create({ data: { albumId: albums[1].id, url: "https://picsum.photos/seed/imbs-literasi/960/640", caption: "Foto demo literasi — ganti dengan dokumentasi sekolah." } });
-  for (const [albumIndex, url, caption] of [
-    [0, "https://picsum.photos/seed/imbs-campus/960/640", "Ruang kegiatan sekolah (foto demo)."],
-    [1, "https://picsum.photos/seed/imbs-reading/960/640", "Ruang baca (foto demo)."],
-    [2, "https://picsum.photos/seed/imbs-project/960/640", "Pameran proyek kelas (foto demo)."],
-  ] as const) {
-    const albumId = albums[albumIndex].id;
-    if (!await db.photo.findFirst({ where: { albumId, url } })) await db.photo.create({ data: { albumId, url, caption } });
+  for (const demo of demoAlbums) {
+    const album = await db.album.findFirst({ where: { title: { in: [demo.title, demo.oldTitle] } } });
+    const saved = album
+      ? await db.album.update({ where: { id: album.id }, data: { title: demo.title, category: demo.category } })
+      : await db.album.create({ data: { title: demo.title, category: demo.category } });
+    albums.push(saved);
+    const legacyPhotoIds = [
+      "photo-1509062522246-3755977927d7", "photo-1507842217343-583bb7270b66", "photo-1427504494785-3a9ca7044f45", "photo-1524178232363-1fb2b075b655",
+      "photo-1532094349884-543bc11b234d", "photo-1581093458791-9d15482442f2", "photo-1453738773917-9c3eff1db985", "photo-1516321318423-f06f85e504b3",
+      "photo-1523240795612-9a054b0db644", "photo-1455390582262-044cdead277a", "photo-1516979187457-637abb4f9353", "photo-1517486808906-6ca8b3f04846",
+    ];
+    await db.photo.deleteMany({ where: { albumId: saved.id, OR: [{ url: { startsWith: "https://picsum.photos/seed/imbs-" } }, ...legacyPhotoIds.map((id) => ({ url: { startsWith: `https://images.unsplash.com/${id}?` } }))] } });
+    for (const [imageName, caption] of demo.photos) {
+      const url = `/brand/stories/${imageName}`;
+      const photo = await db.photo.findFirst({ where: { albumId: saved.id, url } });
+      if (photo) await db.photo.update({ where: { id: photo.id }, data: { caption } });
+      else await db.photo.create({ data: { albumId: saved.id, url, caption } });
+    }
   }
   await db.sPMBPeriod.upsert({ where: { id: "demo-spmb-2026" }, update: {}, create: { id: "demo-spmb-2026", name: "Periode Demo", year: "2026", quota: 100, openAt: new Date("2026-01-01T00:00:00.000Z"), closeAt: new Date("2026-12-31T23:59:59.000Z"), terms: "Periode demo. Perbarui persyaratan resmi sebelum digunakan.", active: true } });
 
