@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { Card } from "@/components/ui/card";
+import { BuilderPage } from "@/components/BuilderPage";
 
 export const revalidate = 60;
 
@@ -28,7 +29,7 @@ export default async function CustomPagePublic({ params }: { params: { slug: str
       </header>
       <div className="public-static-page__content">
         <aside className="public-static-page__rail"><span>IMBS / {page.slug.replaceAll("-", " ")}</span><br />Baca perlahan, ikuti setiap bab.</aside>
-        <Card as="article" className="public-rich-text public-static-page__body" dangerouslySetInnerHTML={{ __html: page.content }} />
+        {page.builderData ? <div className="public-static-page__body"><BuilderPage data={page.builderData} /></div> : <Card as="article" className="public-rich-text public-static-page__body" dangerouslySetInnerHTML={{ __html: page.content }} />}
       </div>
     </main>
   );

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.builder-public-canvas{position:relative;width:min(100%,1200px);margin:0 auto;background:var(--echo-paper-stock);overflow:hidden;border:1px solid var(--echo-seam);color:var(--echo-paper-ink)}
+.builder-public-element{position:absolute;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:clamp(4px,1.1vw,16px);white-space:pre-wrap;line-height:1.35}
+.builder-public-heading{justify-content:flex-start;font-size:clamp(20px,3vw,40px);font-weight:700}
+.public-static-page__body .builder-public-heading h2{margin:0!important;border:0!important;padding:0!important;font:inherit}.builder-public-text{justify-content:flex-start;align-items:flex-start}.builder-public-button{border-radius:var(--echo-radius-md);font-weight:600;text-decoration:none}.builder-public-button:focus-visible{outline:2px solid var(--echo-accent-ink);outline-offset:3px}.builder-public-card{border:1px solid var(--echo-seam);border-radius:var(--echo-radius-lg)}.builder-public-shape{border-radius:var(--echo-radius-md)}.builder-public-line{padding:0}
+
 :root {
   --ratio: 1.618;
   --font-size-base: 1rem;
@@ -729,3 +734,4 @@ h1, h2, h3, h4, .font-display { font-family: var(--font-display), Georgia, serif
   .download-entry__icon { width: 2.4rem; height: 2.8rem; }
   .download-entry > a { grid-column: 3; justify-self: start; }
 }
+.builder-public-container{border:1px solid var(--echo-seam);border-radius:var(--echo-radius-lg)}.builder-public-strip{padding:0;z-index:0}.builder-public-icon{color:var(--echo-accent-ink)}.builder-public-strip-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}

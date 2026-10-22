@@ -12,6 +12,7 @@ const groups = [
       ["Ringkasan", "/admin", "grid"],
       ["Posting", "/admin/posts", "file"],
       ["Halaman", "/admin/pages", "page"],
+      ["IMBS BUILDER", "/admin/builder", "builder"],
       ["Galeri", "/admin/galeri", "image"],
       ["Agenda", "/admin/agenda", "calendar"],
       ["Download", "/admin/download", "download"],
@@ -50,6 +51,7 @@ function NavIcon({ name }: { name: string }) {
     grid: <><rect x="3.5" y="3.5" width="7" height="7" rx="1.5" /><rect x="13.5" y="3.5" width="7" height="7" rx="1.5" /><rect x="3.5" y="13.5" width="7" height="7" rx="1.5" /><rect x="13.5" y="13.5" width="7" height="7" rx="1.5" /></>,
     file: <><path d="M7 3.5h7l4 4v13H7z" /><path d="M14 3.5v4h4M10 12h5M10 16h5" /></>,
     page: <><path d="M6 3.5h9l4 4v13H6z" /><path d="M15 3.5v4h4M9 12h7M9 16h7" /></>,
+    builder: <><rect x="3.5" y="3.5" width="17" height="17" rx="2" /><path d="M8 8h8M8 12h5M8 16h8" /><path d="M16 11v4" /></>,
     image: <><rect x="3.5" y="4.5" width="17" height="15" rx="2" /><circle cx="9" cy="10" r="1.5" /><path d="m5 17 5-4 3 2 3-3 4 4" /></>,
     calendar: <><rect x="4" y="5" width="16" height="15" rx="2" /><path d="M8 3.5v3M16 3.5v3M4 9h16M8 13h2M13 13h3M8 16.5h2" /></>,
     download: <><path d="M12 3.5v11m0 0 4-4m-4 4-4-4" /><path d="M5 16v4h14v-4" /></>,
@@ -72,6 +74,9 @@ function NavIcon({ name }: { name: string }) {
 
 export function AdminShell({ children, user }: { children: React.ReactNode; user?: { name: string; role: string } }) {
   const pathname = usePathname();
+  const allowedLinks = user?.role === "SUPERADMIN" || user?.role === "OPERATOR_BERITA"
+    ? groups
+    : groups.map((group) => ({ ...group, links: group.links.filter(([, href]) => href !== "/admin/builder") }));
 
   if (pathname === "/admin/login") return <>{children}</>;
 
@@ -89,7 +94,7 @@ export function AdminShell({ children, user }: { children: React.ReactNode; user
         </Link>
 
         <nav aria-label="Navigasi admin" className="flex gap-[18px] overflow-x-auto px-[12px] pb-[12px] lg:block lg:flex-1 lg:space-y-[18px] lg:overflow-x-hidden lg:overflow-y-auto lg:px-[12px] lg:py-[8px]">
-          {groups.map((group) => (
+          {allowedLinks.map((group) => (
             <div key={group.label} className="shrink-0 lg:shrink">
               <p className="hidden px-[10px] pb-[8px] text-[10px] font-bold uppercase tracking-[.12em] text-slate-400 lg:block">{group.label}</p>
               <div className="flex gap-[4px] lg:block lg:space-y-[3px]">

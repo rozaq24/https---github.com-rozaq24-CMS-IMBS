@@ -138,7 +138,7 @@ export const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(function Seg
   const segments = useCallback(() => {
     const r = root.current;
     if (!r) return [];
-    return [...r.querySelectorAll<HTMLElement>('[role="radio"]')].map((el) => ({
+    return Array.from(r.querySelectorAll<HTMLElement>('[role="radio"]')).map((el) => ({
       el,
       index: Number(el.dataset.index),
       left: el.offsetLeft,
@@ -346,7 +346,7 @@ export const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(function Seg
     onKeyDownProp?.(e);
     if (e.defaultPrevented) return;
     if (e.key !== "Home" && e.key !== "End") return;
-    const radios = [...e.currentTarget.querySelectorAll<HTMLElement>('[role="radio"]:not([data-disabled])')];
+    const radios = Array.from(e.currentTarget.querySelectorAll<HTMLElement>('[role="radio"]:not([data-disabled])'));
     const target = e.key === "Home" ? radios[0] : radios.at(-1);
     if (!target) return;
     e.preventDefault();

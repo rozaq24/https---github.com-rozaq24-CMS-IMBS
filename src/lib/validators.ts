@@ -24,6 +24,7 @@ export const pageSchema = z.object({
   slug: z.string().min(3).max(80).regex(/^[a-z0-9-]+$/, "Slug hanya huruf kecil, angka, strip").optional()
     .refine((s) => !s || !RESERVED_SLUGS.includes(s.toLowerCase()), "Slug ini dipakai sistem, pilih slug lain"),
   content: z.string().min(20, "Konten minimal 20 karakter"),
+  builderData: z.string().max(250_000).optional(),
   showInMenu: z.boolean().default(true),
   order: z.number().int().min(0).default(0),
 });

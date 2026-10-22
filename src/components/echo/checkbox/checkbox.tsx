@@ -111,7 +111,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(function Ch
         { scale: 1, ...timing("rebound"), overwrite: "auto" },
       );
       if (!on) return;
-      const mark = [...r.querySelectorAll<SVGPathElement>("svg path")].find(
+      const mark = Array.from(r.querySelectorAll<SVGPathElement>("svg path")).find(
         (p) => (p.ownerSVGElement && getComputedStyle(p.ownerSVGElement).display !== "none"),
       );
       if (mark) {

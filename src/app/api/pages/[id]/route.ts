@@ -39,6 +39,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
       ...(v.title ? { title: v.title } : {}),
       slug,
       ...(v.content ? { content: cleanHtml(v.content) } : {}),
+      ...(v.builderData !== undefined ? { builderData: v.builderData } : {}),
       ...(v.showInMenu !== undefined ? { showInMenu: v.showInMenu } : {}),
       ...(v.order !== undefined ? { order: v.order } : {}),
     },
