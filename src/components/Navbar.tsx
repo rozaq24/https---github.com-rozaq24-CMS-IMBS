@@ -1,9 +1,12 @@
 import { db } from "@/lib/db";
-import { buildMenuTree } from "@/lib/menus";
+import { buildPublicMenu } from "@/lib/menus";
 import { NavbarClient } from "@/components/NavbarClient";
-import { getSiteSettings } from "@/lib/settings";
+import type { SiteIdentity } from "@/lib/settings";
 
-export async function Navbar() {
-  const [items, settings] = await Promise.all([db.menuItem.findMany({ where: { visible: true }, orderBy: { order: "asc" } }), getSiteSettings()]);
-  return <NavbarClient items={buildMenuTree(items)} title={settings.identity.siteTitle} logo={settings.identity.logo} />;
+export async function Navbar({ identity }: { identity: SiteIdentity }) {
+  const [items, pages] = await Promise.all([
+    db.menuItem.findMany({ orderBy: { order: "asc" } }),
+    db.customPage.findMany({ where: { showInMenu: true }, select: { slug: true, title: true }, orderBy: [{ order: "asc" }, { title: "asc" }] }),
+  ]);
+  return <NavbarClient items={buildPublicMenu(items, pages)} title={identity.siteTitle} logo={identity.logo} identity={identity} />;
 }

@@ -1,7 +1,7 @@
 ---
 id: T-005
 title: Galeri & Media + Komentar dan Kotak Masuk
-status: REVIEW
+status: DONE
 priority: P1
 phase: 1
 domain: admin/blog
@@ -35,10 +35,10 @@ Album foto berkategori (Masonry ala ReactBits) + moderasi komentar blog + inbox 
 - `src/app/(public)/galeri/page.tsx`, `src/components/Masonry.tsx`, `src/components/ContactForm.tsx`
 
 ## Acceptance Criteria
-- [ ] Upload 5 foto → album tampil Masonry + lightbox jalan + kategori filter benar
-- [ ] Komentar pending tidak tampil publik sampai approved; approve → tampil; hapus → hilang
-- [ ] Pesan pengaduan masuk inbox + badge unread; tandai dibaca terpersist
-- [ ] `npm run build` lolos
+- [x] Upload 5 foto → album tampil Masonry + lightbox jalan + kategori filter benar
+- [x] Komentar pending tidak tampil publik sampai approved; approve → tampil; hapus → hilang
+- [x] Pesan pengaduan masuk inbox + badge unread; tandai dibaca terpersist
+- [x] `npm run build` lolos pada salinan verifikasi terisolasi
 
 ## Uji Manual
 1. Buat album "Upacara" + upload foto → cek /galeri.
@@ -49,3 +49,5 @@ Album foto berkategori (Masonry ala ReactBits) + moderasi komentar blog + inbox 
 - [2026-10-20] Codex - DOING: scoped implementation and existing-system review.
 
 - [2026-10-20] Codex - REVIEW: npx tsc --noEmit dan npx next build lolos; browser QA menunggu server dev dipulihkan.
+- [2026-10-20] Codex - REVIEW: uji browser pengaduan berhasil membuat pesan, menampilkan badge unread 1, menyimpan status dibaca (unread 0), lalu menghapus pesan uji. Uji upload 5 foto dan moderasi komentar belum dijalankan; task tetap REVIEW.
+- [2026-10-20] Codex - DONE: upload lima file gambar sintetis membuat album lima foto; filter kategori menampilkan album QA; lightbox terbuka dan ditutup dengan Escape. Komentar uji tidak tampil publik saat pending, tampil setelah disetujui, dan hilang setelah dihapus. Pesan pengaduan uji muncul di inbox, unread turun 1→0 setelah ditandai dibaca, lalu dihapus. Seluruh record/file uji dibersihkan. Build produksi terisolasi terbaru lolos (78 rute).

@@ -2,6 +2,9 @@
 import { signIn } from "next-auth/react";
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
 
 function LoginForm() {
   const [email, setEmail] = useState("admin@sekolah.sch.id");
@@ -33,29 +36,29 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="card w-full max-w-[420px] space-y-[13px]">
+    <Card onSubmit={onSubmit} className="w-full max-w-[420px] space-y-[13px]" as="form">
       <p className="text-[13px] uppercase tracking-widest text-slate-500">CMS IMBS • Admin</p>
       <h1 className="h-gold-2">Masuk <span className="grad-text">Dashboard</span></h1>
       {params.get("callbackUrl") && <p className="text-[13px] text-slate-500">Silakan login dulu untuk membuka {params.get("callbackUrl")}</p>}
       <label className="block">
         <span className="text-[13px] font-semibold">Email</span>
-        <input className="mt-[8px] w-full border rounded-[13px] px-[13px] py-[13px]" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required />
+        <Input className="mt-[8px] w-full border rounded-[13px] px-[13px] py-[13px]" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required />
       </label>
       <label className="block">
         <span className="text-[13px] font-semibold">Password</span>
-        <input className="mt-[8px] w-full border rounded-[13px] px-[13px] py-[13px]" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
+        <Input className="mt-[8px] w-full border rounded-[13px] px-[13px] py-[13px]" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
       </label>
       {err && <p className="text-[14px] text-rose-600 bg-rose-50 border border-rose-200 rounded-[13px] p-[13px]">{err}</p>}
-      <button className="btn-primary w-full" disabled={loading}>{loading ? "Memeriksa..." : "Masuk"}</button>
-      <p className="text-[13px] text-slate-500">Demo awal: <b>admin@sekolah.sch.id / admin123</b> (jalankan <code>npx prisma db seed</code> dulu).</p>
-    </form>
+      <Button className="w-full" disabled={loading} variant="default">{loading ? "Memeriksa..." : "Masuk"}</Button>
+      <p className="text-[13px] text-slate-500">Demo: <b>admin@sekolah.sch.id / ImbsDemo!2026</b> (jalankan <code>npx prisma db seed</code> dulu).</p>
+    </Card>
   );
 }
 
 export default function LoginPage() {
   return (
     <main className="min-h-screen flex items-center justify-center px-[21px]">
-      <Suspense fallback={<p className="card">Memuat form login...</p>}>
+      <Suspense fallback={<Card className="" as="p">Memuat form login...</Card>}>
         <LoginForm />
       </Suspense>
     </main>

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://echo-ui.com/e/schema/config.json",
+  "dir": "src\\components\\echo",
+  "framework": "next",
+  "packageManager": "npm",
+  "registry": "https://echo-ui.com/e",
+  "seed": {
+    "accent": "#047857",
+    "chassis": "#f8fafc",
+    "paper": "#10212c"
+  }
+}

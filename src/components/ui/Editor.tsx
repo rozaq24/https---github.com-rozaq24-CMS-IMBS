@@ -4,6 +4,8 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 type Props = { value: string; onChange: (html: string) => void };
 
@@ -21,7 +23,7 @@ export function Editor({ value, onChange }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  if (!editor) return <p className="card text-[14px]">Memuat editor...</p>;
+  if (!editor) return <Card className="text-[14px]" as="p">Memuat editor...</Card>;
 
   const btn = (active: boolean) =>
     `px-[8px] py-[4px] text-[13px] border rounded-[8px] ${active ? "bg-slate-900 text-white" : "bg-white"}`;
@@ -52,15 +54,15 @@ export function Editor({ value, onChange }: Props) {
   return (
     <div className="space-y-[8px]">
       <div className="flex gap-[8px] flex-wrap">
-        <button type="button" className={btn(editor.isActive("bold"))} onClick={() => editor.chain().focus().toggleBold().run()}><b>B</b></button>
-        <button type="button" className={btn(editor.isActive("italic"))} onClick={() => editor.chain().focus().toggleItalic().run()}><i>I</i></button>
-        <button type="button" className={btn(editor.isActive("heading", { level: 2 }))} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>H2</button>
-        <button type="button" className={btn(editor.isActive("heading", { level: 3 }))} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>H3</button>
-        <button type="button" className={btn(editor.isActive("bulletList"))} onClick={() => editor.chain().focus().toggleBulletList().run()}>• List</button>
-        <button type="button" className={btn(editor.isActive("orderedList"))} onClick={() => editor.chain().focus().toggleOrderedList().run()}>1. List</button>
-        <button type="button" className={btn(editor.isActive("blockquote"))} onClick={() => editor.chain().focus().toggleBlockquote().run()}>Quote</button>
-        <button type="button" className={btn(editor.isActive("link"))} onClick={setLink}>Link</button>
-        <button type="button" className={btn(false)} onClick={insertImage}>Gambar</button>
+        <Button type="button" className={btn(editor.isActive("bold"))} onClick={() => editor.chain().focus().toggleBold().run()} variant="ghost"><b>B</b></Button>
+        <Button type="button" className={btn(editor.isActive("italic"))} onClick={() => editor.chain().focus().toggleItalic().run()} variant="ghost"><i>I</i></Button>
+        <Button type="button" className={btn(editor.isActive("heading", { level: 2 }))} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} variant="ghost">H2</Button>
+        <Button type="button" className={btn(editor.isActive("heading", { level: 3 }))} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} variant="ghost">H3</Button>
+        <Button type="button" className={btn(editor.isActive("bulletList"))} onClick={() => editor.chain().focus().toggleBulletList().run()} variant="ghost">• List</Button>
+        <Button type="button" className={btn(editor.isActive("orderedList"))} onClick={() => editor.chain().focus().toggleOrderedList().run()} variant="ghost">1. List</Button>
+        <Button type="button" className={btn(editor.isActive("blockquote"))} onClick={() => editor.chain().focus().toggleBlockquote().run()} variant="ghost">Quote</Button>
+        <Button type="button" className={btn(editor.isActive("link"))} onClick={setLink} variant="ghost">Link</Button>
+        <Button type="button" className={btn(false)} onClick={insertImage} variant="ghost">Gambar</Button>
       </div>
       <EditorContent editor={editor} />
     </div>

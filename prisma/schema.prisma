@@ -54,6 +54,7 @@ model CustomPage {
   slug       String   @unique
   title      String
   content    String
+  builderData String?
   showInMenu Boolean  @default(true)
   order      Int      @default(0)
   createdAt  DateTime @default(now())

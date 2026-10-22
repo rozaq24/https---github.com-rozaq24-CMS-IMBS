@@ -1,0 +1,46 @@
+{
+  "lockVersion": 1,
+  "core": "0.3.0",
+  "items": {
+    "checkbox": {
+      "version": "0.3.0",
+      "files": {
+        "checkbox/checkbox.css": "e759885efdc6fe69da0418e8de0701b7c0d1b775f5d040df637edd53538eb53e",
+        "checkbox/checkbox.tsx": "0cb4c32775ba8826342c20a3f67cfb52ffb2e7f7ad939f6ad8dad8366c09d01f",
+        "checkbox/index.ts": "6a684f453946ab02c628d39d0d51a36d1934d27e52d57d6870e7cac7282efe11"
+      }
+    },
+    "field": {
+      "version": "0.3.3",
+      "files": {
+        "field/field.css": "19128b49925dbf76c672d0d1bd76c0a86abcf095552e6e608dbd019c10e4568e",
+        "field/field.tsx": "9a1ea42b7e96093e36c6ad3a1054b6d34aa3c607d9faed6340790f22359e05aa",
+        "field/index.ts": "e0078808499d64e9f48967ea8bb662723f3c20a07440ace5a04cc86e7c55809b"
+      }
+    },
+    "hardware-button": {
+      "version": "0.3.3",
+      "files": {
+        "hardware-button/hardware-button.css": "fc259d8dc349e243df74c3764cf7e1e98a5ccb1680448329fcf0018bf319ac8a",
+        "hardware-button/hardware-button.tsx": "9f7e77aafdcdc8518149954640e0166201d3223acbd1bd19d44747e483b2b352",
+        "hardware-button/treatment.ts": "3005c570e7ef82517c3f7c7b362cfb93e219bc1e120638eaff3764eeaf941360",
+        "hardware-button/index.ts": "e4a7fc3afcad001f1bb7a58cbcb5cc5425558faa62ccad07bdab510e1d20121f"
+      }
+    },
+    "segmented": {
+      "version": "0.3.3",
+      "files": {
+        "segmented/segmented.css": "50db5a43b0aca88eed0d03dbf895b618c6e7abc2a07256d2e8b8b9233b1fe66c",
+        "segmented/segmented.tsx": "0cf4dbf61a7331fee7c79a65ea35b8526c37f18aaabf95e7ca1d9bfe60665c5e",
+        "segmented/index.ts": "7aa5c4984d65ee82359f7e00847b9fdcf90d08415c3ab1919eb483086fc7d4f5"
+      }
+    },
+    "size": {
+      "version": "0.3.0",
+      "files": {
+        "size/size.tsx": "b91ba99b3d5346a6440fb08994ce548af5eb1049474dd046f7a98eac77bc61f2",
+        "size/index.ts": "577c971095c6f5521938df83775849144f09882a724394878be5a8aeff759ac3"
+      }
+    }
+  }
+}

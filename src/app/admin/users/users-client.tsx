@@ -1,5 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { NativeSelect } from "@/components/ui/native-select";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
 
 type User = { id: string; name: string; email: string; role: string; active: boolean; lastLoginAt: string | null };
 const ROLES = ["SUPERADMIN", "OPERATOR_BERITA", "OPERATOR_SPMB", "GURU", "WALI_READONLY"];
@@ -39,51 +44,51 @@ export function UsersClient() {
 
   return (
     <div className="space-y-[21px]">
-      {msg && <p className="card text-[14px]">{msg}</p>}
-      <form onSubmit={create} className="card grid md:grid-cols-5 gap-[13px]">
-        <input className="border rounded-[13px] px-[13px] py-[13px]" placeholder="Nama" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
-        <input className="border rounded-[13px] px-[13px] py-[13px]" placeholder="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-        <input className="border rounded-[13px] px-[13px] py-[13px]" placeholder="Password min 6" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
-        <select className="border rounded-[13px] px-[13px] py-[13px]" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
+      {msg && <Card className="text-[14px]" as="p">{msg}</Card>}
+      <Card onSubmit={create} className="grid md:grid-cols-5 gap-[13px]" as="form">
+        <Input className="border rounded-[13px] px-[13px] py-[13px]" placeholder="Nama" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+        <Input className="border rounded-[13px] px-[13px] py-[13px]" placeholder="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+        <Input className="border rounded-[13px] px-[13px] py-[13px]" placeholder="Password min 6" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
+        <NativeSelect className="border rounded-[13px] px-[13px] py-[13px]" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
           {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-        </select>
-        <button className="btn-primary">+ Tambah User</button>
-      </form>
-      <div className="card">
+        </NativeSelect>
+        <Button className="" variant="default">+ Tambah User</Button>
+      </Card>
+      <Card className="">
         <div className="flex gap-[13px] flex-wrap mb-[13px]">
-          <input className="border rounded-[13px] px-[13px] py-[8px]" placeholder="Cari nama/email..." value={q} onChange={(e) => setQ(e.target.value)} />
-          <select className="border rounded-[13px] px-[13px] py-[8px]" value={role} onChange={(e) => setRole(e.target.value)}>
+          <Input className="border rounded-[13px] px-[13px] py-[8px]" placeholder="Cari nama/email..." value={q} onChange={(e) => setQ(e.target.value)} />
+          <NativeSelect className="border rounded-[13px] px-[13px] py-[8px]" value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="">Semua role</option>{ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-          </select>
-          <button className="btn-outline !py-[8px]" onClick={load}>Cari</button>
+          </NativeSelect>
+          <Button className="!py-[8px]" onClick={load} variant="outline">Cari</Button>
           <span className="text-[13px] text-slate-500 self-center">Total: {total}</span>
         </div>
         <div className="overflow-x-auto">
-          <table className="tbl">
-            <thead><tr><th>Nama</th><th>Email</th><th>Role</th><th>Status</th><th>Login Terakhir</th><th>Aksi</th></tr></thead>
-            <tbody>
+          <Table>
+            <TableHeader><TableRow><TableHead>Nama</TableHead><TableHead>Email</TableHead><TableHead>Role</TableHead><TableHead>Status</TableHead><TableHead>Login Terakhir</TableHead><TableHead>Aksi</TableHead></TableRow></TableHeader>
+            <TableBody>
               {data.map((u) => (
-                <tr key={u.id}>
-                  <td>{u.name}</td><td>{u.email}</td>
-                  <td>
-                    <select className="border rounded-[8px] px-[8px] py-[4px] text-[14px]" value={u.role} onChange={(e) => patch(u.id, { role: e.target.value }, "Ganti role")}>
+                <TableRow key={u.id}>
+                  <TableCell>{u.name}</TableCell><TableCell>{u.email}</TableCell>
+                  <TableCell>
+                    <NativeSelect className="border rounded-[8px] px-[8px] py-[4px] text-[14px]" value={u.role} onChange={(e) => patch(u.id, { role: e.target.value }, "Ganti role")}>
                       {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-                    </select>
-                  </td>
-                  <td>{u.active ? "✅ Aktif" : "⛔ Nonaktif"}</td>
-                  <td className="text-[13px]">{u.lastLoginAt ? new Date(u.lastLoginAt).toLocaleString("id-ID") : "-"}</td>
-                  <td className="whitespace-nowrap">
-                    <button className="text-[14px] underline mr-[8px]" onClick={() => patch(u.id, { active: !u.active }, u.active ? "Nonaktifkan" : "Aktifkan")}>
+                    </NativeSelect>
+                  </TableCell>
+                  <TableCell>{u.active ? "✅ Aktif" : "⛔ Nonaktif"}</TableCell>
+                  <TableCell className="text-[13px]">{u.lastLoginAt ? new Date(u.lastLoginAt).toLocaleString("id-ID") : "-"}</TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    <Button className="text-[14px] underline mr-[8px]" onClick={() => patch(u.id, { active: !u.active }, u.active ? "Nonaktifkan" : "Aktifkan")} variant="ghost">
                       {u.active ? "Nonaktifkan" : "Aktifkan"}
-                    </button>
-                  </td>
-                </tr>
+                    </Button>
+                  </TableCell>
+                </TableRow>
               ))}
-              {data.length === 0 && <tr><td colSpan={6} className="text-center text-slate-500">Belum ada data.</td></tr>}
-            </tbody>
-          </table>
+              {data.length === 0 && <TableRow><TableCell colSpan={6} className="text-center text-slate-500">Belum ada data.</TableCell></TableRow>}
+            </TableBody>
+          </Table>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

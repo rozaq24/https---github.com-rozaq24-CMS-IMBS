@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   }
   const slug = await uniqueSlug(baseSlug, async (s) => !!(await db.customPage.findUnique({ where: { slug: s } })));
   const page = await db.customPage.create({
-    data: { slug, title: v.title, content: cleanHtml(v.content), showInMenu: v.showInMenu, order: v.order },
+    data: { slug, title: v.title, content: cleanHtml(v.content), builderData: v.builderData, showInMenu: v.showInMenu, order: v.order },
   });
   await writeLog({ userId: session!.user.id, ip: getClientIp(req), action: "PAGE_CREATE", detail: page.slug });
   return NextResponse.json(page, { status: 201 });

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { authOptions, hasRole } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { GreetingForm } from "./greeting-form";
+import { Card } from "@/components/ui/card";
 
 export default async function GreetingAdmin() {
   const session = await getServerSession(authOptions);
@@ -10,8 +11,8 @@ export default async function GreetingAdmin() {
   if (!hasRole(session.user.role, ["SUPERADMIN", "OPERATOR_BERITA"])) {
     return (
       <main className="mx-auto max-w-6xl px-[21px] py-[34px]">
-        <div className="card"><h1 className="h-gold-2">403 — Akses Ditolak</h1>
-        <p className="text-slate-500 mt-[8px]">Sambutan hanya untuk SUPERADMIN / OPERATOR_BERITA.</p></div>
+        <Card className=""><h1 className="h-gold-2">403 — Akses Ditolak</h1>
+        <p className="text-slate-500 mt-[8px]">Sambutan hanya untuk SUPERADMIN / OPERATOR_BERITA.</p></Card>
       </main>
     );
   }

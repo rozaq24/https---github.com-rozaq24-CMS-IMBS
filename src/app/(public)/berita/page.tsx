@@ -1,46 +1,103 @@
 import Link from "next/link";
+import { ArrowRight, CalendarDays, Eye, Search } from "lucide-react";
 import { db } from "@/lib/db";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { PublicImage } from "@/components/PublicImage";
 
 export const revalidate = 60;
 
+const categories = ["", "BERITA", "PENGUMUMAN", "AGENDA", "ARTIKEL"];
+const dateLabel = (date: Date | null) => date?.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) || "Belum dijadwalkan";
+const excerptOf = (post: { excerpt: string | null; content: string }) => post.excerpt || `${post.content.replace(/<[^>]+>/g, "").slice(0, 145)}…`;
+
 export default async function BeritaPage({ searchParams }: { searchParams: { type?: string; q?: string } }) {
-  const type = searchParams.type || undefined;
+  const type = searchParams.type || "";
   const q = searchParams.q || "";
   const now = new Date();
-  const where = {
-    status: "PUBLISHED",
-    publishedAt: { lte: now },
-    ...(type ? { type } : {}),
-    ...(q ? { OR: [{ title: { contains: q } }, { excerpt: { contains: q } }] } : {}),
+  const posts = await db.post.findMany({
+    where: {
+      status: "PUBLISHED",
+      publishedAt: { lte: now },
+      ...(type ? { type } : {}),
+      ...(q ? { OR: [{ title: { contains: q } }, { excerpt: { contains: q } }] } : {}),
+    },
+    include: { author: { select: { name: true } } },
+    orderBy: { publishedAt: "desc" },
+    take: 30,
+  });
+  const [featured, ...stories] = posts;
+  const coverByType: Record<string, string> = {
+    BERITA: "/brand/stories/kolaborasi.svg",
+    PENGUMUMAN: "/brand/stories/karya-murid.svg",
+    AGENDA: "/brand/stories/menulis.svg",
+    ARTIKEL: "/brand/stories/perpustakaan.svg",
   };
-  const posts = await db.post.findMany({ where, include: { author: { select: { name: true } } }, orderBy: { publishedAt: "desc" }, take: 30 });
+
   return (
-    <main className="mx-auto max-w-6xl px-[21px] py-[34px] space-y-[21px]">
-      <div className="flex items-end justify-between flex-wrap gap-[13px]">
-        <h1 className="h-gold-1">Berita & <span className="grad-text">Artikel</span></h1>
-        <div className="flex gap-[8px]">
-          {["", "BERITA", "PENGUMUMAN", "AGENDA", "ARTIKEL"].map((t) => (
-            <Link key={t} href={t ? `/berita?type=${t}` : "/berita"} className={`text-[13px] px-[13px] py-[8px] border rounded-[13px] ${type === t || (!type && !t) ? "bg-slate-900 text-white" : ""}`}>{t || "Semua"}</Link>
-          ))}
+    <main className="journal-page">
+      <div aria-hidden="true" className="story-progress"><span /></div>
+      <header className="journal-hero">
+        <div className="journal-hero__heading">
+          <p className="story-eyebrow">KABAR DARI SEKOLAH</p>
+          <h1 className="font-display">Jurnal <em>IMBS.</em></h1>
+          <p>Catatan kegiatan, pengumuman, dan gagasan yang tumbuh bersama warga sekolah.</p>
         </div>
-      </div>
-      <form action="/berita" className="card flex gap-[8px]">
-        <input name="q" defaultValue={q} placeholder="Cari berita..." className="w-full border rounded-[13px] px-[13px] py-[8px]" />
-        {type && <input type="hidden" name="type" value={type} />}
-        <button className="btn-outline !py-[8px]">Cari</button>
-      </form>
-      <div className="grid md:grid-cols-3 gap-[21px]">
-        {posts.map((p, index) => (
-          <Link key={p.id} href={`/berita/${p.slug}`} style={{ animationDelay: `${Math.min(index, 8) * 50}ms` }} className="card animate-list hover:shadow-xl transition">
-            {p.cover && <img src={p.cover} alt={p.title} className="rounded-[13px] w-full h-[160px] object-cover mb-[13px]" />}
-            <span className="text-[13px] font-bold text-slate-500">{p.type} • {p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("id-ID") : ""}</span>
-            <h2 className="h-gold-3 mt-[8px]">{p.title}</h2>
-            <p className="text-[14px] text-slate-600 mt-[8px]">{p.excerpt || p.content.replace(/<[^>]+>/g, "").slice(0, 120) + "..."}</p>
-            <p className="text-[13px] text-slate-500 mt-[8px]">Oleh {p.author?.name} • 👁 {p.views}</p>
+        {featured ? <Card asChild className="journal-feature">
+          <Link href={`/berita/${featured.slug}`}>
+            <div className="journal-feature__visual">
+              <PublicImage src={featured.cover || coverByType[featured.type] || "/brand/stories/ruang-belajar.svg"} alt={featured.title} fallbackLabel={featured.title} className="journal-feature__image" />
+              <span className="journal-feature__index">CERITA PILIHAN · 01</span>
+            </div>
+            <div className="journal-feature__copy">
+              <p className="journal-meta"><span>{featured.type}</span><span><CalendarDays aria-hidden="true" />{dateLabel(featured.publishedAt)}</span></p>
+              <h2 className="font-display">{featured.title}</h2>
+              <p>{excerptOf(featured)}</p>
+              <span className="journal-read">Baca cerita lengkap <ArrowRight aria-hidden="true" /></span>
+            </div>
           </Link>
-        ))}
-        {posts.length === 0 && <p className="card md:col-span-3 text-center text-slate-500">Belum ada publikasi. Admin bisa tulis via /admin/posts.</p>}
-      </div>
+        </Card> : <div className="journal-feature journal-feature--empty"><p>Belum ada cerita untuk ditampilkan.</p></div>}
+      </header>
+
+      <section className="journal-archive" aria-label="Arsip publikasi sekolah">
+        <aside className="journal-archive__aside">
+          <p className="story-eyebrow">ARSIP SEKOLAH</p>
+          <h2 className="font-display">Baca sesuai minat</h2>
+          <nav aria-label="Kategori publikasi" className="journal-categories">
+            {categories.map((item) => {
+              const label = item || "Semua cerita";
+              const active = type === item;
+              return <Link key={item || "all"} href={item ? `/berita?type=${item}${q ? `&q=${encodeURIComponent(q)}` : ""}` : `/berita${q ? `?q=${encodeURIComponent(q)}` : ""}`} aria-current={active ? "page" : undefined} className={active ? "is-active" : ""}>{label}</Link>;
+            })}
+          </nav>
+          <Card as="form" action="/berita" className="journal-search">
+            <label htmlFor="journal-search-input">Cari dalam jurnal</label>
+            <div><Input id="journal-search-input" name="q" defaultValue={q} placeholder="Kata kunci…" /><Button type="submit" size="icon" aria-label="Cari berita"><Search aria-hidden="true" /></Button></div>
+            {type && <Input type="hidden" name="type" value={type} />}
+          </Card>
+        </aside>
+        <div className="journal-feed">
+          <div className="journal-feed__top"><p className="story-eyebrow">MENYUSURI CERITA</p><span>{posts.length.toString().padStart(2, "0")} publikasi</span></div>
+          {stories.map((post, index) => (
+            <Card asChild key={post.id} className="journal-story">
+              <Link href={`/berita/${post.slug}`} className={index % 2 ? "journal-story__link journal-story__link--reverse" : "journal-story__link"}>
+                <div className="journal-story__visual">
+                  <PublicImage src={post.cover || coverByType[post.type] || "/brand/stories/ruang-belajar.svg"} alt={post.title} fallbackLabel={post.title} className="journal-story__image" />
+                  <span>{String(index + 2).padStart(2, "0")}</span>
+                </div>
+                <div className="journal-story__copy">
+                  <p className="journal-meta"><span>{post.type}</span><span><CalendarDays aria-hidden="true" />{dateLabel(post.publishedAt)}</span></p>
+                  <h2 className="font-display">{post.title}</h2>
+                  <p>{excerptOf(post)}</p>
+                  <div className="journal-story__byline"><span>Oleh {post.author?.name || "Tim IMBS"}</span><span><Eye aria-hidden="true" />{post.views}</span></div>
+                </div>
+              </Link>
+            </Card>
+          ))}
+          {!posts.length && <Card className="journal-empty" as="p">Belum ada publikasi untuk filter ini. Coba kategori lain atau hapus kata kunci pencarian.</Card>}
+        </div>
+      </section>
     </main>
   );
 }
